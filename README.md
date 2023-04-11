@@ -15,3 +15,7 @@ TODOs:
 6. Add in developers, contacts.
 
 7. Add in code of conduct.
+
+8. useful link to refer to: 
+  a. https://github.com/matiassingers/awesome-readme
+  b. https://github.com/othneildrew/Best-README-Template
