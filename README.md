@@ -19,3 +19,5 @@ TODOs:
 8. useful link to refer to: 
   a. https://github.com/matiassingers/awesome-readme
   b. https://github.com/othneildrew/Best-README-Template
+  
+9. Make sure that the repo is clean and correct in the final version (remove unnecessary inits, etc. and make sure everything uploaded is correct).
