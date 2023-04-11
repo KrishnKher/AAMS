@@ -22,4 +22,4 @@ TODOs:
   c. https://www.geeksforgeeks.org/top-10-useful-github-repos-that-every-developer-should-follow/
   d. https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting
   
-9. Make sure that the repo is clean and correct in the final version (remove unnecessary inits, etc. and make sure everything uploaded is correct).
+9. Make sure that the repo is clean and correct in the final version (remove unnecessary inits, etc. and make sure everything uploaded is the final, correct version).
