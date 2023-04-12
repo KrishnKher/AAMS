@@ -24,4 +24,6 @@ TODOs:
   
 9. Make sure that the repo is clean and correct in the final version (remove unnecessary inits, etc. and make sure everything uploaded is the final, correct version).
 
-10. Future [Rust].
+10. Future [Rust]. minimal code and description
+
+11. after finishing publish first release
