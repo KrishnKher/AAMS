@@ -23,3 +23,5 @@ TODOs:
   d. https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting
   
 9. Make sure that the repo is clean and correct in the final version (remove unnecessary inits, etc. and make sure everything uploaded is the final, correct version).
+
+10. Future [Rust].
