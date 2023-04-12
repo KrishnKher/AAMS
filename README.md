@@ -27,3 +27,5 @@ TODOs:
 10. Future [Rust]. minimal code and description
 
 11. after finishing publish first release
+
+12. Make sure to check the SECURIITY.md file made here.
