@@ -28,4 +28,4 @@ TODOs:
 
 11. after finishing publish first release
 
-12. Make sure to check the security.md file made here.
+12. Make sure to check the SECURIITY.md file made here.
