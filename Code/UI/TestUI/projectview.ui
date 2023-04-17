@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProjectView</class>
+ <widget class="QWidget" name="ProjectView">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>569</width>
+    <height>343</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QTabWidget" name="rounds">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>40</y>
+     <width>541</width>
+     <height>301</height>
+    </rect>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="round1">
+    <attribute name="title">
+     <string>Round 1</string>
+    </attribute>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create Seat Matrix</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="matrixUpload">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Upload CSV File</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="manSeat">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>60</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Manually Enter </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>141</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Upload Candidate Data</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="dataUpload">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>160</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Upload CSV File</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="sortData">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>240</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Get Results!</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="sortRules">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>200</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Sort Rules</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="round2">
+    <attribute name="title">
+     <string>Round 2</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round3">
+    <attribute name="title">
+     <string>Round 3</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round4">
+    <attribute name="title">
+     <string>Round 4</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round5">
+    <attribute name="title">
+     <string>Round 5</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round6">
+    <attribute name="title">
+     <string>Round 6</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round7">
+    <attribute name="title">
+     <string>Round 7</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round8">
+    <attribute name="title">
+     <string>Round 8</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round9">
+    <attribute name="title">
+     <string>Round 9</string>
+    </attribute>
+   </widget>
+   <widget class="QWidget" name="round10">
+    <attribute name="title">
+     <string>Round 10</string>
+    </attribute>
+   </widget>
+  </widget>
+  <widget class="QLabel" name="projectName">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>101</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
