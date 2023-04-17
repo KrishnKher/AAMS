@@ -1,9 +1,2 @@
-#include <iostream>
+#include "Login.h"
 using namespace std;
-
-class Login {
-    private:
-        size_t x;
-    protected:
-    public:
-};
