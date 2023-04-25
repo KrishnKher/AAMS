@@ -35,7 +35,7 @@ class User {
 
 };
 
-class ProjectHandler { // Mediator pattern?
+class ProjectHandler { // Mediator/Facade pattern?
 
 };
 
