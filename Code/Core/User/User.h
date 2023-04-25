@@ -1,3 +1,6 @@
+#ifndef USER_H
+#define USER_H
+
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
@@ -9,12 +12,26 @@ enum class accessDegree {share, edit, view};
 class User {
     private: 
     uint userID;
-    std::vector <std::pair<shared_ptr<Project>, accessDegree>> projects;
+    std::vector <std::pair<shared_ptr<Project>, accessDegree>> assosciatedProjects;
     std::vector <shared_ptr<Project>> openProjects;
     protected:
     public:
+    User(); 
+    User(uint userID);
+    User(const User& parentUser);
+    User(User&& user);
+
+    bool setUserID(uint userID);
+    uint fetchUserID();
+
+    bool registerProjects(std::vector <>);
+    bool deregisterProjects();
+
     Project& createProject();
-    bool deleteProject();
+    bool fetchOpenProjects();
+    bool deleteProject(Project& project);
+
+    ~User();
 
 };
 
@@ -23,3 +40,5 @@ class ProjectHandler { // Mediator pattern?
 };
 
 }
+
+#endif USER_H
