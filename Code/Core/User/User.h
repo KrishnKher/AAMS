@@ -12,8 +12,11 @@ enum class accessDegree {share, edit, view};
 class User {
     private: 
     uint userID;
+
     std::vector <std::pair<shared_ptr<Project>, accessDegree>> assosciatedProjects;
     std::vector <shared_ptr<Project>> openProjects;
+
+    std::vector <Theme> preferedThemes; // Define theme!!
     protected:
     public:
     User(); 
@@ -32,7 +35,6 @@ class User {
     bool deleteProject(Project& project);
 
     ~User();
-
 };
 
 class ProjectHandler { // Mediator/Facade pattern?
