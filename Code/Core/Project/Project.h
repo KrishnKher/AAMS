@@ -9,11 +9,11 @@ class Project {
         uint currRoundState;
         vector<string> filePaths;
         SeatMatrix currSeatMatrix;
-        vector<shared_ptr<UIObservers>> uiObservers; 
+        //vector<shared_ptr<UIObservers>> uiObservers; 
     protected:
     public:
         void sort();
-        void checkSystemHealth(shared_ptr<MetaSystemHandler>);
+        // checkSystemHealth(shared_ptr<MetaSystemHandler>);
 
 };
 
