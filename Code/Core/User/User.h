@@ -19,8 +19,8 @@ class User {
     uint userID;
     std::string userName;
     std::string userLanguage;
-    User::Project userProject;
-    User::Theme userTheme;
+    User::Project userProjectDomo;
+    User::Theme userThemeDomo;
 
     protected:
     friend class User::Project;
