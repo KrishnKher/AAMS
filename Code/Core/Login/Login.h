@@ -2,6 +2,9 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include "../libraries/rapidjson/include/rapidjson/document.h"
+#include "../libraries/rapidjson/include/rapidjson/writer.h"
+#include "../libraries/rapidjson/include/rapidjson/filereadstream.h"
+#include "../libraries/rapidjson/include/rapidjson/filewritestream.h"
 using namespace std;
 
 string LOG = "log.txt";
@@ -15,7 +18,7 @@ class Login {  //Singleton class
         fstream logFile;
         static Login* loginInstance; //making Login as a singleton class
         //private constructor
-        Login() : logFile("log.txt",ios::in | ios::out){
+        Login() : logFile("log.json",ios::in | ios::out){
             //loginInstance = NULL;
             userName = "";
             hashedPassword = "";
@@ -40,21 +43,3 @@ class Login {  //Singleton class
         ~Login();
         //void checkSystemHealth(weak_ptr<MetaSystemHandler>);
 };
-
-// Login::Login() : logFile("log.txt",ios::in | ios::out){
-//     userName = "";
-//     hashedPassword = "";
-//     lastRegisteredUser = 0;
-// }
-
-// weak_ptr<Login> Login::getInstance(){
-
-//     if (loginInstance == nullptr){
-//         loginInstance = make_unique<Login>();
-//         return loginInstance;
-//     }
-//     else{
-//         return loginInstance;
-//     }
-
-// }
