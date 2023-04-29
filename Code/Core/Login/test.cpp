@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <bits/stdc++.h>
-#include "../libraries/rapidjson/include/rapidjson/document.h"
-#include "../libraries/rapidjson/include/rapidjson/writer.h"
-#include "../libraries/rapidjson/include/rapidjson/filereadstream.h"
-#include "../libraries/rapidjson/include/rapidjson/filewritestream.h"
+#include "../../Libraries/rapidjson/include/rapidjson/document.h"
+#include "../../Libraries/rapidjson/include/rapidjson/writer.h"
+#include "../../Libraries/rapidjson/include/rapidjson/filereadstream.h"
+#include "../../Libraries/rapidjson/include/rapidjson/filewritestream.h"
 using namespace std;
 
 int main(){
