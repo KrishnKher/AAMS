@@ -1,2 +1,3 @@
 Add release names here.
-First release name: Course18.
+First release name: CoAP
+Second release name: Himalaya.
