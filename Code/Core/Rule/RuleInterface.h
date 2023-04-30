@@ -2,14 +2,16 @@
 #define RULE_INTERFACE_H
 
 #include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 namespace Rule {
 
-using ruleElement = std::pair<shared_ptr<BaseRule>, uint>;
+using ruleElement = std::pair<shared_ptr<BaseRule>, uint32_t>;
 
 enum class dataType { numeric, text, other };
-enum class ruleMixType { and, not, or } enum class sortOrder { ascending, descending, none };
+enum class ruleMixType { AND, NOT, OR };
+enum class sortOrder { ascending, descending, none };
 
 // composite + builder. first composite
 
@@ -30,9 +32,9 @@ public:
   virtual bool condition() = 0;
 
   /* Abstract functions for defining rule conjunctions.*/
-  virtual bool operator && (Rule &complementaryRule) = 0;
-  virtual bool operator || (Rule &complementaryRule) = 0;
-  virtual bool operator ! (Rule &complementaryRule) = 0;
+  virtual bool operator and (Rule &complementaryRule) = 0;
+  virtual bool operator or (Rule &complementaryRule) = 0;
+  virtual bool operator not () = 0;
 
   /* Identifies itself as a base rule or a composite rule.*/
   virtual bool isCompositeRule() = 0;
@@ -44,8 +46,8 @@ public:
 class BaseRule : public Rule {
 private:
   std::string columnName;
-  std::vector<uint> rowIndices;
-  Rule::sortOrder sortingOrder;
+  std::vector<uint32_t> rowIndices;
+  sortOrder sortingOrder;
 
 protected:
 public:
@@ -56,30 +58,30 @@ public:
   bool configureColumnName(std::string columnName);
   std::string fetchColumnName();
 
-  bool configureRowIndices(std::vector <uint> rowIndices);
-  std::vector<uint> fetchRowIndices();
+  bool configureRowIndices(std::vector <uint32_t> rowIndices);
+  std::vector <uint32_t> fetchRowIndices();
 
-  bool configureSortingOrder(Rule::sortOrder sortingOrder);
+  bool configureSortingOrder(sortOrder sortingOrder);
   Rule::sortOrder fetchSortingOrder();
 
-  bool condition() const override;
+  bool condition() override;
 
-  bool comparator() const override;
+  bool comparator() override;
 
-  bool operator && (Rule &complementaryRule) const override;
-  bool operator || (Rule &complementaryRule) const override;
-  bool operator ! (Rule &complementaryRule) const override;
+  bool operator and (Rule &complementaryRule) override;
+  bool operator or (Rule &complementaryRule) override;
+  bool operator not () override;
 
   bool isCompositeRule() final;
 
-  ~BaseRule() const override; //DESTRUCTO!
+  ~BaseRule() override; //DESTRUCTO!
 };
 
   class CompositeRule : public Rule {
   private:
   protected:
-    std::map<shared_ptr<Rule>, uint> rulePriorities;
-    std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>, Rule::ruleMixType> ruleConjunctions;
+    std::map<shared_ptr<Rule>, uint32_t> rulePriorities;
+    std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>, ruleMixType> ruleConjunctions;
 
   public:
     /* Initialization based constructor.*/
@@ -91,36 +93,36 @@ public:
 
     /* Accessor-mutator function pair for handling storage
      of rules and their priorities.*/
-    bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint>> referenceRulePriorities);
-    std::vector<std::pair<shared_ptr<Rule>, uint>> fetchRulePriorities(std::vector<shared_ptr<Rule>> requestedRules);
+    bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> referenceRulePriorities);
+    std::vector<std::pair<shared_ptr<Rule>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule>> requestedRules);
 
     /* Accessor-mutator function pair for handling
      storage of rules and their priorities.*/
-    bool configureRulePriorities(std::map<shared_ptr<Rule>, uint> referenceRulePriorities);
-    std::map<shared_ptr<Rule>, uint> fetchRulePriorities(std::vector<shared_ptr<Rule>> requestedRules);
+    bool configureRulePriorities(std::map<shared_ptr<Rule>, uint32_t> referenceRulePriorities);
+    std::map <shared_ptr<Rule>, uint32_t> fetchRulePriorities(std::vector <shared_ptr<Rule>> requestedRules);
 
     /* Accessor functions for handling storage
     of rules and their priorities.*/
-    std::vector<std::pair<shared_ptr<Rule>, uint>> fetchAllRulePriorities();
-    std::map<shared_ptr<Rule>, uint> fetchAllRulePriorities();
+    std::vector<std::pair<shared_ptr<Rule>, uint32_t>> fetchAllRulePriorities();
+    std::map<shared_ptr<Rule>, uint32_t> fetchAllRulePriorities();
 
     /* Mutator functions for handling storage
     of rules and their priorities.*/
     bool updateRules(std::vector<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>> rulesExchangeMap);
-    bool updateRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint>> updatedPrioritizedRules);
-    bool addRules(std::vector<std::pair<shared_ptr<Rule>, uint>> newRules);
+    bool updateRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> updatedPrioritizedRules);
+    bool addRules(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> newRules);
     bool subtractRules(std::vector<shared_ptr<Rule>> oldRules);
 
     /* Accessor-mutator pair for handling storage of various rule conjunctions.*/
     bool configureRuleConjunctions(std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
-     Rule::ruleMixType> ruleConjunctions);
+     ruleMixType> ruleConjunctions);
     std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
-     Rule::ruleMixType> fetchRuleConjunctions(std::vector<std::pair<shared_ptr<Rule>,
+     ruleMixType> fetchRuleConjunctions(std::vector<std::pair<shared_ptr<Rule>,
       shared_ptr<Rule>>> rulePairs);
 
     /* Accessor function for handling storage of various rule conjunctions.*/
     std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
-     Rule::ruleMixType> fetchAllRuleConjunctions();
+     ruleMixType> fetchAllRuleConjunctions();
 
     /* Mutator functions for handling storage
     of various rule conjunctions.*/
@@ -129,20 +131,20 @@ public:
     bool updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>>,
      ruleMixType>> updatedRuleConjunctions);
     bool addRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
-     Rule::ruleMixType>> newRuleConjunctions);
+     ruleMixType>> newRuleConjunctions);
     bool subtractRuleConjunctions(std::vector<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>> oldRuleConjunctions);
 
-    bool condition()const override; // WHAT ABOUT pure virtial?
+    bool condition() override; // WHAT ABOUT pure virtial?
 
-    bool comparator() const override;
+    bool comparator() override;
 
-    bool operator && () const override;
-    bool operator || () const override;
-    bool operator ! () const override;
+    bool operator and (Rule &complementaryRule) override;
+    bool operator or (Rule &complementaryRule) override;
+    bool operator not () override;
 
     bool isCompositeRule() final;
 
-    ~CompositeRule() const override;
+    ~CompositeRule() override;
   };
 
 } // namespace Rule

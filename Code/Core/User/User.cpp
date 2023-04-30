@@ -41,13 +41,13 @@ using namespace std;
 
   bool User::ProjectWrapper::deregisterProjects(std::vector <Project::Project> claimedProjects) {
     for(auto& userProject: claimedProjects) {
-      this->associatedProjects.erase(userProject); //What happens to the shared pointer in openProjects?
+      this->associatedProjects.erase(userProject); //What happens to the shared pointer in
     }
     return true;
   }
 
   std::map <Project::Project, User::accessDegree> User::ProjectWrapper::fetchRegisteredProjects(
-                std::vector <shared_ptr<Project::Project>> registeredProjects) {
+                std::vector <unique_ptr<Project::Project>> registeredProjects) {
     std::map <Project::Project, accessDegree> resultProjects;
 
     for(auto& userProjectPointer: registeredProjects) {
@@ -70,17 +70,39 @@ using namespace std;
     return this->associatedProjects;
   }     
 
-  bool User::ProjectWrapper::openProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
-  bool User::ProjectWrapper::closeProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
+  bool User::ProjectWrapper::openProjects(std::vector<unique_ptr<Project::Project>> requestedProjects) {
+    for (auto& projectPointer : requestedProjects) {
+      this->activeProjects.insert(projectPointer); // assert?
+    }
+  }
+  bool User::ProjectWrapper::closeProjects(std::vector<unique_ptr<Project::Project>> requestedProjects) {
+    for (auto& projectPointer : requestedProjects) {
+      this->activeProjects.erase(projectPointer); // assert?
+    }
+  }
 
-  bool User::ProjectWrapper::openAllProjects();
-  bool User::ProjectWrapper::closeAllProjects();
+  bool User::ProjectWrapper::openAllProjects() {
+    for(auto& project: this->associatedProjects) {
+      // std::unique_ptr = make_unique <project.first> 
+    }
+  }
+  bool User::ProjectWrapper::closeAllProjects() {
 
-  std::vector<Project::Project, accessDegree> User::ProjectWrapper::fetchAllOpenProjects();
-  std::vector<Project::Project, accessDegree> User::ProjectWrapper::fetchAllClosedProjects();
+  }
 
-  bool User::ProjectWrapper::configureAccess(std::vector <Project::Project> legacyProjects);
+  std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllOpenProjects() {
 
-  bool User::ProjectWrapper::deleteProjects(std::vector <shared_ptr<Project::Project>> requestedProjects);
+  }
+  std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllClosedProjects() {
 
-  ~ProjectWrapper();
+  }
+
+  bool User::ProjectWrapper::configureAccess(std::vector <Project::Project> legacyProjects) {
+
+  }
+
+  bool User::ProjectWrapper::deleteProjects(std::vector <shared_ptr<Project::Project>> requestedProjects) {
+
+  }
+
+  /* ~User::ProjectWrapper::ProjectWrapper() {};*/
