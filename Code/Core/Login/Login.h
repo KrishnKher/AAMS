@@ -10,6 +10,7 @@ using namespace std;
 class Login {  //Singleton class
     private: 
         string userName;
+        
         string hashedPassword;
         //User* currUser;
         uint lastRegisteredUser;
