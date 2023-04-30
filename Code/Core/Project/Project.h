@@ -1,20 +1,21 @@
 #include <iostream>
 #include <bits/stdc++.h>
+#include "../Rule/Rule.h"
+#include "../SeatMatrix/SeatMatrix.h"
 using namespace std;
 
-namespace Project{
 class Project {
     private: 
-        Rule currRule;
+        Rule* currRule;
         uint currRoundState;
+        vector<uint> totalRounds;
         vector<string> filePaths;
-        SeatMatrix currSeatMatrix;
-        //vector<shared_ptr<UIObservers>> uiObservers; 
+        SeatMatrix currSeatMatrix; 
     protected:
     public:
         void sort();
-        // checkSystemHealth(shared_ptr<MetaSystemHandler>);
+        void preProcessData(uint roundNumber);
+        void deleteRound(uint roundNumber);
+        void addRound();
 
 };
-
-}

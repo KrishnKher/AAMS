@@ -1,34 +1,30 @@
 #include "Login.h"
+#include "../User/User.h"
 using namespace std;
-
-class User{
-    int a;
-};
 
 Login* Login ::loginInstance = NULL;
 
-bool Login::checkCredentials(string uname, string pwd){
-    fstream logFile("log.json",ios::in | ios::out);
-    string json((istreambuf_iterator<char>(logFile)),istreambuf_iterator<char>());
-    rapidjson::Document doc;
-    bool auth = false;
-    doc.Parse(json.c_str());
-    if (doc.HasParseError()) {
-        cerr << "Error parsing JSON: "
-             << doc.GetParseError() << endl;
-        return 1;
+bool Login::checkCredentials(string userName, string password) {
+  fstream logFile("log.json", ios::in | ios::out);
+  string json((istreambuf_iterator<char>(logFile)), istreambuf_iterator<char>());
+  rapidjson::Document doc;
+  bool auth = false;
+
+  doc.Parse(json.c_str());
+  if (doc.HasParseError()) {
+    cerr << "Error parsing JSON: " << doc.GetParseError() << endl;
+    return 1;
+  }
+
+  for (auto &entry : doc["validUsers"].GetArray()) {
+    if (entry.MemberBegin()->name.GetString() == userName) {
+      if (entry.MemberBegin()->value.GetString() == password) {
+        auth = true;
+      }
+      break;
     }
-    for(auto& x: doc["validUsers"].GetArray()){
-        if(x.MemberBegin()->name.GetString() == uname){
-            if(x.MemberBegin()->value.GetString() == pwd){
-                auth = true;
-                return auth;
-            }
-            else
-                return auth;
-        }
-    }
-    return auth;
+  }
+  return auth;
 }
 
 void Login::setValues(string uname,string pwd/*,User& currUser*/){

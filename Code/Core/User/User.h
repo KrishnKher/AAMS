@@ -3,94 +3,113 @@
 
 #include <iostream>
 #include <bits/stdc++.h>
+#include "../Project/Project.h"
 using namespace std;
 
-namespace User{
+namespace User {
 
-enum class accessDegree {share, edit, view};
-typedef std::pair<shared_ptr<Project>, accessDegree> userProjectData;
+enum class accessDegree { share, edit, view };
 
-constexpr uint kDefaultUserID = 0;
-constexpr std::string kDefaultUserName = "User";
-constexpr std::string kDefaultUserLanguage = "English";
+const uint32_t kDefaultUserID = 0;
+const std::string kDefaultUserName = "User";
+const std::string kDefaultUserLanguage = "English";
 
 class User {
-    private: 
-    uint userID;
-    std::string userName;
-    std::string userLanguage;
-    User::Project userProjectDomo;
-    User::Theme userThemeDomo;
+ private:
+  uint32_t userID;
+  std::string userName;
+  std::string userLanguage;
+  ProjectWrapper userProjectSeneschal;
+  ThemeWrapper userThemeSeneschal;
 
-    protected:
-    friend class User::Project;
-    friend class User::Theme;
+ protected:
+  friend class ProjectWrapper;
+  friend class ThemeWrapper;
 
-    public:
-    User() : userID(kDefaultUserID), userName(kDefaultUserName), 
-    userLanguage(kDefaultUserLanguage) {} ; 
-    User(uint userID);
-    User(const User& parentUser);
-    User(User&& user);
+ public:
+  User(uint32_t userID = kDefaultUserID, std::string userName = kDefaultUserName,
+      std::string userLanguage = kDefaultUserLanguage)
+      : userID(userID),
+        userName(userName),
+        userLanguage(userLanguage) {};
+  /* User(const User& parentUser);*/
+  /* User(User&& user);*/
 
-    bool configureUserID(uint userID);
-    uint fetchUserID();
+  bool configureUserID(uint32_t userID);
+  uint32_t fetchUserID();
 
-    bool configureUserName(std::string userName);
-    std::string fetchUserName();
+  bool configureUserName(std::string userName);
+  std::string fetchUserName();
 
-    bool configureUserLanguage(std::string userLanguage);
-    std::string fetchUserLanguage();
+  bool configureUserLanguage(std::string userLanguage);
+  std::string fetchUserLanguage();
 
-    bool configureUserProject();
-    bool loadUserProject(User::Project referenceUserProject);
-    User::Project fetchUserProject();
+  /* bool configureUserProject();*/
+  bool loadUserProject(ProjectWrapper referenceUserProject);
+  ProjectWrapper fetchUserProject();
 
-    bool configureUserTheme();
-    bool loadUserTheme(User::Theme referenceUserTheme);
-    User::Theme fetchUserTheme();
+  /* bool configureUserTheme();*/
+  bool loadUserTheme(ThemeWrapper referenceUserTheme);
+  ThemeWrapper fetchUserTheme();
 
-    ~User();
+  /* ~User();*/
 };
 
-class Project { 
-    private:
-    std::vector <userProject> assosciatedProjects;
-    std::vector <shared_ptr<Project>> openProjects;
-    protected:
-    public:
-    Project() : assosciatedProjects({}), openProjects({}) {};
-    Project(const Project& referenceProject);
-    Project(Project&& project);
+class ProjectWrapper {
+ private:
+  std::map <Project::Project, accessDegree> associatedProjects;
+  std::set <shared_ptr<Project::Project>> openProjects;
 
-    bool registerProjects(std::vector <userProject> unclaimedProjects);
-    bool deregisterProjects(std::vector <userProject> claimedProjects);
+ protected:
+ public:
+  ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
+                  std::set <shared_ptr<Project::Project>> openProjects = {})
+  : associatedProjects(associatedProjects), openProjects(openProjects) {};
+  ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
+                  std::vector <shared_ptr<Project::Project>> openProjects = {})
+  : associatedProjects(associatedProjects) { // do something about open projects
+  };
+  /* ProjectWrapper(const ProjectWrapper& referenceProject);*/
+  /* ProjectWrapper(ProjectWrapper&& project);*/
 
-    std::vector<shared_ptr<Project>> fetchRegisteredProjects();
+  bool registerProjects(std::vector <std::pair<Project::Project, accessDegree>> unclaimedProjects);
+  bool registerProjects(std::map <Project::Project, accessDegree> unclaimedProjects);
+  bool deregisterProjects(std::vector <Project::Project> claimedProjects);
 
-    bool openProjects(std::vector<shared_ptr<Project>> requestedProjects);
-    bool closeProjects(std::vector<shared_ptr<Project>> requestedProjects);
+  std::map <Project::Project, accessDegree> fetchRegisteredProjects(
+                std::vector <shared_ptr<Project::Project>> registeredProjects);
+  std::map <Project::Project, accessDegree> fetchRegisteredProjects(
+                std::vector <Project::Project> registeredProjects);
+  std::map <Project::Project, accessDegree> fetchAllRegisteredProjects();       
 
-    std::vector<shared_ptr<Project>> fetchOpenProjects();
-    std::vector<shared_ptr<Project>> fetchClosedProjects();
+  bool openProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
+  bool closeProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
 
-    bool deleteProjects(std::vector<shared_ptr<Project>> requestedProjects);
+  bool openAllProjects();
+  bool closeAllProjects();
 
-    ~Project();
+  std::vector <Project::Project, accessDegree> fetchAllOpenProjects();
+  std::vector <Project::Project, accessDegree> fetchAllClosedProjects();
+
+  bool configureAccess(std::vector <Project::Project> legacyProjects);
+
+  bool deleteProjects(std::vector <shared_ptr <Project::Project>> requestedProjects);
+
+  ~ProjectWrapper();
 };
 
-class Theme {
-    private:
-    std::vector <int> preferredThemes; // not actually an int!!
-    protected:
-    public:
-    Theme() : preferredThemes({}) {};
-    Theme(const Theme& referenceTheme);
-    Theme(Theme&& theme);
+class ThemeWrapper {
+ private:
+  std::vector<int> preferredThemes;  // not actually an int!!
+ protected:
+ public:
+  ThemeWrapper() : preferredThemes({}){};
+  /* Theme(const Theme& referenceTheme);*/
+  /* Theme(Theme&& theme);*/
 
-    ~Theme();
+  ~ThemeWrapper();
 };
 
-}
+}  // namespace User
 
 #endif USER_H

@@ -7,8 +7,6 @@
 #include "../libraries/rapidjson/include/rapidjson/filewritestream.h"
 using namespace std;
 
-string LOG = "log.txt";
-
 class Login {  //Singleton class
     private: 
         string userName;
