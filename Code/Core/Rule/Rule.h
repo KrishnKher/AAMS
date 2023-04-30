@@ -8,4 +8,7 @@ using namespace std;
 
 // can have maxbase rule, minbase rule, groupby baserule, etc.
 
+// visitor pattern
+
+
 #endif RULE_H
