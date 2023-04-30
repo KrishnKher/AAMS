@@ -29,3 +29,5 @@ TODOs:
 12. Make sure to check the SECURIITY.md file made here.
 
 13. Name first relase CoAP and second release as Himalaya and make main and dev branches accordingly.
+
+14. In User.h, complete accessDegree related functionality.
