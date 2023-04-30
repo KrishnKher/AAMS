@@ -36,9 +36,10 @@ class Login {  //Singleton class
                 return loginInstance;
             }
         }
-        //void setValues(string uname,string pwd,User currUser);
+        void setValues(string uname,string pwd/*,User& currUser*/);
         bool checkCredentials(string uname, string pwd);
-        //User& registerUser();
+        //User& registerUser(string uname,string pwd);
+        //User& createUser();
         void logout();
         ~Login();
         //void checkSystemHealth(weak_ptr<MetaSystemHandler>);
