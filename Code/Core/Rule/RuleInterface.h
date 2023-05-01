@@ -79,7 +79,7 @@ public:
 };
 
 template <typename T>
-class CompositeRule : public Rule<T> {
+class CompositeRule : public Rule <T> {
   private:
   protected:
     std::map<shared_ptr<Rule>, uint32_t> rulePriorities;
@@ -87,7 +87,7 @@ class CompositeRule : public Rule<T> {
 
   public:
     /* Initialization based constructor.*/
-    CompositeRule(std::map<shared_ptr<Rule>, uint32_t> rulePriorities = {},
+    CompositeRule(std::map<shared_ptr<Rule<T>>, uint32_t> rulePriorities = {},
     std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>, ruleMixType> ruleConjunctions = {})
     : rulePriorities(rulePriorities), ruleConjunctions(ruleConjunctions); // initializer_list based!!!
     /* Deep copy constructor.*/
@@ -95,10 +95,14 @@ class CompositeRule : public Rule<T> {
     /* Move constructor for transferring ownership of rule objects.*/
     CompositeRule(CompositeRule &&compositeRule) {};
 
+    bool dummy();
+
+    bool dummy (T x);
+
     /* Accessor-mutator function pair for handling storage
      of rules and their priorities.*/
-    bool configureRulePriorities(std::map<shared_ptr<Rule>, uint32_t> referenceRulePriorities);
-    bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> referenceRulePriorities);
+    bool configureRulePriorities(std::map<shared_ptr<Rule<T>>, uint32_t> referenceRulePriorities);
+    // bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> referenceRulePriorities);
     std::vector<std::pair<shared_ptr<Rule>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule>> requestedRules);
 
     /* Accessor functions for handling storage
