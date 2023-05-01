@@ -121,9 +121,9 @@ public:
 
     /* Mutator functions for handling storage
     of various rule conjunctions.*/
-    bool updateRulePair(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>>,
+    bool updateRulePair(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
      std::pair<shared_ptr<Rule>, shared_ptr<Rule>>>> rulePairsExchangeMap);
-    bool updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>>,
+    bool updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
      ruleMixType>> updatedRuleConjunctions);
     bool addRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>,
      ruleMixType>> newRuleConjunctions);
