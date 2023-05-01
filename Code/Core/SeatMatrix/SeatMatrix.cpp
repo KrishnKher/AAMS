@@ -25,3 +25,6 @@ void SeatMatrix::deleteSeats(string dep,string category,unit seats){
     }
 }
 
+SeatMatrix::SeatMatrix(map<string,map<string,uint>> matrix){
+    this->matrix = matrix;
+}

@@ -27,10 +27,10 @@ bool Login::checkCredentials(string userName, string password) {
   return auth;
 }
 
-void Login::setValues(string uname,string pwd/*,User& currUser*/){
+void Login::setValues(string uname,string pwd,User& currUser){
     userName = uname;
     hashedPassword = pwd;
-    //this->currUser = &currUser; 
+    this->currUser = &currUser; 
 }
 
 // TO BE DONE
@@ -45,6 +45,10 @@ User& Login::registerUser(string uname,string pwd){
         exit(0);
     }
     
+}
+
+User& Login::createUser(string uname){
+  
 }
 
 void Login::logout(){
