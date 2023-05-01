@@ -7,18 +7,17 @@ using namespace std;
 
 namespace Rule {
 
-using ruleElement = std::pair<shared_ptr<BaseRule>, uint32_t>;
-
 enum class dataType { numeric, text, other };
 enum class ruleMixType { AND, NOT, OR };
 enum class sortOrder { ascending, descending, none };
 
 // composite + builder. first composite
 
+template <class ...T>
 class Rule {
 private:
 protected:
-  shared_ptr<Rule> realRule;
+  shared_ptr <Rule> realRule;
 
 public:
   //CONSTRUCTOR!
@@ -27,7 +26,7 @@ public:
 //   bool loadRule(std::map<ruleElement> referenceRuleComposition);
 //   std::map<ruleElement> fetchRule();
 
-  virtual bool comparator() = 0; //requires variadic, pack, fold expression
+  virtual bool comparator(T operand1, T operand2) = 0; //requires variadic, pack, fold expression
 
   virtual bool condition() = 0;
 
@@ -43,7 +42,8 @@ public:
   virtual ~Rule();
 };
 
-class BaseRule : public Rule {
+template <class T>
+class BaseRule : public Rule <T> {
 private:
   std::string columnName;
   std::vector<uint32_t> rowIndices;
@@ -77,7 +77,8 @@ public:
   ~BaseRule() override; //DESTRUCTO!
 };
 
-  class CompositeRule : public Rule {
+template <class ...T>
+class CompositeRule : public Rule<T> {
   private:
   protected:
     std::map<shared_ptr<Rule>, uint32_t> rulePriorities;
