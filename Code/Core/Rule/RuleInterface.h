@@ -62,15 +62,15 @@ public:
   std::vector <uint32_t> fetchRowIndices();
 
   bool configureSortingOrder(sortOrder sortingOrder);
-  Rule::sortOrder fetchSortingOrder();
+  sortOrder fetchSortingOrder();
 
-  bool condition() override;
+  // bool condition() override;
 
-  bool comparator() override;
+  // bool comparator() override;
 
-  bool operator and (Rule &complementaryRule) override;
-  bool operator or (Rule &complementaryRule) override;
-  bool operator not () override;
+  // bool operator and (Rule &complementaryRule) override;
+  // bool operator or (Rule &complementaryRule) override;
+  // bool operator not () override;
 
   bool isCompositeRule() final;
 
@@ -93,17 +93,12 @@ public:
 
     /* Accessor-mutator function pair for handling storage
      of rules and their priorities.*/
+    bool configureRulePriorities(std::map<shared_ptr<Rule>, uint32_t> referenceRulePriorities);
     bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> referenceRulePriorities);
     std::vector<std::pair<shared_ptr<Rule>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule>> requestedRules);
 
-    /* Accessor-mutator function pair for handling
-     storage of rules and their priorities.*/
-    bool configureRulePriorities(std::map<shared_ptr<Rule>, uint32_t> referenceRulePriorities);
-    std::map <shared_ptr<Rule>, uint32_t> fetchRulePriorities(std::vector <shared_ptr<Rule>> requestedRules);
-
     /* Accessor functions for handling storage
     of rules and their priorities.*/
-    std::vector<std::pair<shared_ptr<Rule>, uint32_t>> fetchAllRulePriorities();
     std::map<shared_ptr<Rule>, uint32_t> fetchAllRulePriorities();
 
     /* Mutator functions for handling storage
@@ -134,13 +129,13 @@ public:
      ruleMixType>> newRuleConjunctions);
     bool subtractRuleConjunctions(std::vector<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>> oldRuleConjunctions);
 
-    bool condition() override; // WHAT ABOUT pure virtial?
+    // bool condition() override; // WHAT ABOUT pure virtial?
 
-    bool comparator() override;
+    // bool comparator() override;
 
-    bool operator and (Rule &complementaryRule) override;
-    bool operator or (Rule &complementaryRule) override;
-    bool operator not () override;
+    // bool operator and (Rule &complementaryRule) override;
+    // bool operator or (Rule &complementaryRule) override;
+    // bool operator not () override;
 
     bool isCompositeRule() final;
 
