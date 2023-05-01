@@ -1,3 +1,8 @@
 #include "Rule.h"
 using namespace std;
-using namespace Rule;
+
+bool GateScoreRule::comparator(std::string score1, std::string score2) {
+    uint32_t _score1 = stoi(score1);
+    uint32_t _score2 = stoi(score2);
+    return _score1 < _score2;
+}

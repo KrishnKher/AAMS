@@ -13,7 +13,7 @@ enum class sortOrder { ascending, descending, none };
 
 // composite + builder. first composite
 
-template <class ...T>
+template <class T>
 class Rule {
 private:
 protected:
@@ -52,17 +52,18 @@ private:
 protected:
 public:
   // virtual BaseRule() : columnName("def") {}; CONSTRUCTOR!!
-  BaseRule(const BaseRule& referenceBaseRule);
-  BaseRule(BaseRule&& baseRule);
+  // BaseRule(const BaseRule& referenceBaseRule);
+  // BaseRule(BaseRule&& baseRule);
 
-  bool configureColumnName(std::string columnName);
-  std::string fetchColumnName();
+  inline bool configureColumnName(std::string columnName) { this->columnName = columnName; return true; };
+  std::string fetchColumnName() { return this->columnName; }
 
-  bool configureRowIndices(std::vector <uint32_t> rowIndices);
-  std::vector <uint32_t> fetchRowIndices();
+  inline bool configureRowIndices(std::vector <uint32_t> rowIndices) 
+  { this->rowIndices = rowIndices; return true; }
+  std::vector <uint32_t> fetchRowIndices() { return this->rowIndices; }
 
-  bool configureSortingOrder(sortOrder sortingOrder);
-  sortOrder fetchSortingOrder();
+  inline bool configureSortingOrder(sortOrder sortingOrder) { this->sortingOrder = sortingOrder; return true; }
+  sortOrder fetchSortingOrder() { return this->sortingOrder; }
 
   // bool condition() override;
 
@@ -72,12 +73,12 @@ public:
   // bool operator or (Rule &complementaryRule) override;
   // bool operator not () override;
 
-  bool isCompositeRule() final;
+  inline bool isCompositeRule() final {return false; };
 
-  ~BaseRule() override; //DESTRUCTO!
+  // ~BaseRule() override; //DESTRUCTO!
 };
 
-template <class ...T>
+template <class T>
 class CompositeRule : public Rule<T> {
   private:
   protected:
@@ -86,11 +87,13 @@ class CompositeRule : public Rule<T> {
 
   public:
     /* Initialization based constructor.*/
-    CompositeRule(); // initializer_list based!!!
+    CompositeRule(std::map<shared_ptr<Rule>, uint32_t> rulePriorities = {},
+    std::map<std::pair<shared_ptr<Rule>, shared_ptr<Rule>>, ruleMixType> ruleConjunctions = {})
+    : rulePriorities(rulePriorities), ruleConjunctions(ruleConjunctions); // initializer_list based!!!
     /* Deep copy constructor.*/
-    CompositeRule(const CompositeRule &compositeRule);
+    CompositeRule(const CompositeRule &compositeRule) {};
     /* Move constructor for transferring ownership of rule objects.*/
-    CompositeRule(CompositeRule &&compositeRule);
+    CompositeRule(CompositeRule &&compositeRule) {};
 
     /* Accessor-mutator function pair for handling storage
      of rules and their priorities.*/
@@ -138,7 +141,7 @@ class CompositeRule : public Rule<T> {
     // bool operator or (Rule &complementaryRule) override;
     // bool operator not () override;
 
-    bool isCompositeRule() final;
+    inline bool isCompositeRule() final {return true; };
 
     ~CompositeRule() override;
   };

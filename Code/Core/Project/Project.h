@@ -6,9 +6,9 @@ using namespace std;
 
 class Project {
     private: 
-        Rule* currRule;
-        uint currRoundState;
-        vector<uint> totalRounds;
+        Rule::Rule* currRule;
+        uint32_t currRoundState;
+        vector<uint32_t> totalRounds;
         string baseFilePath;
         vector<string> coapResponsePaths;
         SeatMatrix currSeatMatrix; 
@@ -18,8 +18,8 @@ class Project {
         // make a load file function
         void loadData(string fileName);
         void sort();
-        void preProcessData(uint roundNumber);
-        void deleteRound(uint roundNumber);
+        void preProcessData(uint32_t roundNumber);
+        void deleteRound(uint32_t roundNumber);
         void addRound();
 
 };

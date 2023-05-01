@@ -10,18 +10,18 @@ using namespace std;
 
 // visitor pattern: later
 
-class GateScoreRule: public Rule::BaseRule<uint32_t> {
+class GateScoreRule: public Rule::BaseRule<std::string> {
 public:
   bool condition() override { return true; }
 
-  bool comparator(uint32_t score1, uint32_t score2) override;
+  bool comparator(std::string score1, std::string score2) override;
 
   inline bool operator and (Rule &complementaryRule) override {return true; }
   inline bool operator or (Rule &complementaryRule) override {return true; }
   inline bool operator not () override {return true; }
 };
 
-class DoBRule: public Rule::BaseRule<std::string> {
+class DoBRule: public Rule::BaseRule <std::string> {
 public:
   inline bool condition() override { return true; }
 
@@ -32,11 +32,11 @@ public:
   inline bool operator not () override {return true; }
 };
 
-class CoAPRule: public Rule::CompositeRule<uint32_t, std::string> {
+class CoAPRule: public Rule::CompositeRule <std::pair<uint32_t, std::string>> {
  public:
   inline bool condition() override { return true; }
 
-  bool comparator(uint32_t _, uint32_t __, std::string ___, std::string ____) override;
+  bool comparator(std::pair<uint32_t, std::string> coapEntry1, std::pair<uint32_t, std::string> coapEntry2) override;
 
   inline bool operator and (Rule &complementaryRule) override {return true; }
   inline bool operator or (Rule &complementaryRule) override {return true; }
