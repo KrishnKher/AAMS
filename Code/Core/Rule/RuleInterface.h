@@ -13,7 +13,7 @@ enum class sortOrder { ascending, descending, none };
 
 // composite + builder. first composite
 
-template <class T>
+template <typename T>
 class Rule {
 private:
 protected:
@@ -42,7 +42,7 @@ public:
   virtual ~Rule();
 };
 
-template <class T>
+template <typename T>
 class BaseRule : public Rule <T> {
 private:
   std::string columnName;
@@ -78,7 +78,7 @@ public:
   // ~BaseRule() override; //DESTRUCTO!
 };
 
-template <class T>
+template <typename T>
 class CompositeRule : public Rule<T> {
   private:
   protected:
