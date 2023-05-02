@@ -11,7 +11,7 @@ class Login {  //Singleton class
     private: 
         string userName;
         string hashedPassword;
-        User::User* currUser;
+        //User::User* currUser;
         uint lastRegisteredUser;
         fstream logFile;
         static Login* loginInstance; //making Login as a singleton class

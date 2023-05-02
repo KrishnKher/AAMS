@@ -1,5 +1,5 @@
 #include "Login.h"
-#include "../User/User.h"
+//#include "../User/User.h"
 using namespace std;
 
 Login* Login ::loginInstance = NULL;
@@ -20,7 +20,7 @@ bool Login::checkCredentials(string userName, string password) {
     if (entry.MemberBegin()->name.GetString() == userName) {
       if (entry.MemberBegin()->value.GetString() == password) {
         auth = true;
-        createUser(userName);
+        //createUser(userName);
       }
       break;
     }
@@ -28,11 +28,11 @@ bool Login::checkCredentials(string userName, string password) {
   return auth;
 }
 
-void Login::setValues(string uname,string pwd,User currUser){
-    userName = uname;
-    hashedPassword = pwd;
-    this->currUser = &currUser; 
-}
+// void Login::setValues(string uname,string pwd,User currUser){
+//     userName = uname;
+//     hashedPassword = pwd;
+//     this->currUser = &currUser; 
+// }
 
 // TO BE DONE
 void Login::registerUser(string uname,string pwd){
@@ -48,14 +48,14 @@ void Login::registerUser(string uname,string pwd){
     
 }
 
-void Login::createUser(string uname){
-  // create user
-  User::User user;
-  this->currUser = user;
-}
+// void Login::createUser(string uname){
+//   // create user
+//   User::User user;
+//   this->currUser = user;
+// }
 
 void Login::logout(){
-    delete currUser; //delete the curr user
+    //delete currUser; //delete the curr user
     userName = "";
     hashedPassword = "";
 }
@@ -66,5 +66,5 @@ Login::~Login(){
 
 int main(){
     Login* l = Login::getInstance();
-    cout<<l->checkCredentials("Sujeth","1234")<<endl;
+    cout<<l->checkCredentials("Sujeeth","1234")<<endl;
 }

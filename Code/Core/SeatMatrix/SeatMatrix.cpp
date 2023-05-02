@@ -1,7 +1,7 @@
 #include "SeatMatrix.h"
 using namespace std;
 
-void SeatMatrix::addSeats(string dep,string category,uint seats){
+void SeatMatrix::addSeats(string dep,string category,uint32_t seats){
     if(matrix.find(dep) != matrix.end() && matrix[dep].find(category) != matrix[dep].end()){
         matrix[dep][category] += seats;
     }
@@ -11,7 +11,7 @@ void SeatMatrix::addSeats(string dep,string category,uint seats){
     }
 }
 
-void SeatMatrix::deleteSeats(string dep,string category,uint seats){
+void SeatMatrix::deleteSeats(string dep,string category,uint32_t seats){
     if(matrix.find(dep) != matrix.end() && matrix[dep].find(category) != matrix[dep].end()){
         if(matrix[dep][category] < seats){
             std::cout<<"Cannot perform this operation as there are not enough seats in the seat matrix to assign\n";
@@ -29,12 +29,12 @@ map<string,map<string,uint>> SeatMatrix::getMatrix(){
     return matrix;
 }
 
-SeatMatrix::SeatMatrix(map<string,map<string,uint>> m){
+SeatMatrix::SeatMatrix(map<string,map<string,uint32_t>> m){
     this->matrix = m;
 }
 
 SeatMatrix::SeatMatrix(const SeatMatrix& a){
-    this->matrix = a.getMatrix();
+    this->matrix = a.matrix;
 }
 
 void SeatMatrix::printSeats(){
@@ -45,13 +45,15 @@ void SeatMatrix::printSeats(){
     }
 }
 
-// int main(){
-//     map<string,map<string,uint>> matrix;
-//     matrix["hello"]["student"] = 1;
-//     SeatMatrix cm(matrix);
-//     cm.printSeats();
-//     cm.addSeats("hello","student",2);
-//     cm.printSeats()
-//     cm.deleteSeats("hello","student",1);
-//     cm.printSeats();
-// }
+int main(){
+    map<string,map<string,uint>> matrix;
+    matrix["hello"]["student"] = 1;
+    SeatMatrix cm(matrix);
+    SeatMatrix c = cm;
+    c.printSeats();
+    cm.printSeats();
+    cm.addSeats("hello","student",2);
+    cm.printSeats();
+    cm.deleteSeats("hello","student",1);
+    cm.printSeats();
+}

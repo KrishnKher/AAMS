@@ -1,5 +1,5 @@
 ﻿applicant_id,full_name,date_of_birth,gate_score,specialization_desc_1,specialization_desc_2,specialization_desc_3,specialization_desc_4,specialization_desc_5,category
-1,a,22-05-200,10,CSE,EE,AI,,,GEN
+1,a,22-05-2000,10,CSE,EE,AI,,,GEN
 2,b,21-04-2000,12,EE,MSME,CSE,,,OBC
 3,c,12-07-2000,31,CSE,EE,CE,CH,,ST
 4,d,01-02-2001,15,EE,CSE,,,,OBC
