@@ -89,7 +89,7 @@ class CompositeRule : public Rule <T> {
     /* Initialization based constructor.*/
     CompositeRule(std::map<shared_ptr<Rule<T>>, uint32_t> rulePriorities = {},
     std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>, ruleMixType> ruleConjunctions = {})
-    : rulePriorities(rulePriorities), ruleConjunctions(ruleConjunctions); // initializer_list based!!!
+    : rulePriorities(rulePriorities), ruleConjunctions(ruleConjunctions) {}; // initializer_list based!!!
     /* Deep copy constructor.*/
     CompositeRule(const CompositeRule &compositeRule) {};
     /* Move constructor for transferring ownership of rule objects.*/

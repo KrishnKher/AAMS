@@ -134,3 +134,6 @@ bool Rule::CompositeRule<T>::subtractRuleConjunctions(std::vector<std::pair<shar
     return true;
  }
 
+int main() {
+    cout << "Hello." << endl;
+}
