@@ -137,31 +137,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// void deleteRow(vector<pair<string,vector<string>>>& data,uint id){
-//     int i,j;
-//     for(i=0;i<data.size();i++){
-//         if(data[i].first == "applicant_id"){
-//             for(j=0;j<data[i].second.size();j++){
-//                 if(data[i].second[j] == to_string(id)){
-//                     break;
-//                 }
-//             }
-//         }
-//     }
-//     if(j != data[i].second.size()){
-//         for(i=0;i<data.size();i++){
-//             data[i].second.erase(data[i].second.begin()+j);
-//         }
-//     }
-// }
-
-
 int main(){
     ifstream file("/home/sujeeth/project_graph/SWE/modCOAP.csv");
     vector<pair<string,vector<string>>> data;
     if(!file.is_open()) throw std::runtime_error("Could not open file");
     string line,colName;
     string val;
+    map<string,int> colPlace;
+    set<string> visited;
     if(file.good())
     {
         // Extract the first line in the file
@@ -172,13 +155,21 @@ int main(){
         std::stringstream ss(line);
 
         // Extract each column name
+        int colId = 0;
         while(std::getline(ss, colName, ',')){
             
             // Initialize and add <colname, int vector> pairs to result
             data.push_back({colName, std::vector<string> {}});
+            if(visited.find(colName) == visited.end()){
+                colPlace[colName] = colId;
+                visited.insert(colName);
+            }
+            colId++;
         }
     }
-
+    for(auto i=colPlace.begin();i!=colPlace.end();i++){
+        cout<<i->first<<" "<<i->second<<endl;
+    }
     while(std::getline(file, line))
     {
         line.pop_back();
@@ -211,25 +202,15 @@ int main(){
         cout.flush();
     }
     map<string,vector<string>> studentPriority;
-    map<string,int> colPlace;
-    set<string> visited;
-    for(int i=0;i<data.size();i++){
-        if(data[i].first == "applicant_id" || data[i].first == "specialization_desc_1" || data[i].first == "specialization_desc_2" || data[i].first == "specialization_desc_3" || data[i].first == "specialization_desc_4" || data[i].first == "specialization_desc_5"){
-            if(visited.find(data[i].first) == visited.end()){
-                visited.insert(data[i].first);
-                colPlace[data[i].first] = i;
-            }
-        }
-    }
     
     cout<<data.at(colPlace["applicant_id"]).second[0]<<" :"<<data.at(colPlace["specialization_desc_2"]).second[0]<<endl;
     for(int i=0;i<data.at(colPlace["applicant_id"]).second.size();i++){
-        studentPriority[{data.at(colPlace["applicant_id"]).second[i],data.at(colPlace["category"])}].push_back(data.at(colPlace["specialization_desc_1"]).second[i]);
-        studentPriority[{data.at(colPlace["applicant_id"]).second[i],data.at(colPlace["category"])}].push_back(data.at(colPlace["specialization_desc_2"]).second[i]);
-        studentPriority[{data.at(colPlace["applicant_id"]).second[i],data.at(colPlace["category"])}].push_back(data.at(colPlace["specialization_desc_3"]).second[i]);
-        studentPriority[{data.at(colPlace["applicant_id"]).second[i],data.at(colPlace["category"])}].push_back(data.at(colPlace["specialization_desc_4"]).second[i]);
-        studentPriority[{data.at(colPlace["applicant_id"]).second[i],data.at(colPlace["category"])}].push_back(data.at(colPlace["specialization_desc_5"]).second[i]);
+        studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_1"]).second[i]);
+        studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_2"]).second[i]);
+        studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_3"]).second[i]);
+        studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_4"]).second[i]);
+        studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_5"]).second[i]);
     }
-    cout<<studentPriority[{"1","GEN"}]<<endl;
+    cout<<studentPriority["1"][0]<<endl;
     return 0;
 }
