@@ -210,6 +210,7 @@ class Comparator{
             return stoi(a) < stoi(b);
         }
 };
+<<<<<<< HEAD
 
 int main(){
     ifstream file("/home/sujeeth/project_graph/SWE/modCOAP.csv");
@@ -326,6 +327,124 @@ int main(){
     // cout<<studentPriority["1"][0]<<endl;
     // cout<<data.at(colPlace["category"]).second[0]<<endl;
 
+=======
+
+int main(){
+    ifstream file("/home/sujeeth/project_graph/SWE/modCOAP.csv");
+    vector<pair<string,vector<string>>> data;
+    if(!file.is_open()) throw std::runtime_error("Could not open file");
+    string line,colName;
+    string val;
+    map<string,int> colPlace;
+    set<string> visited;
+    map<string,map<string,uint32_t>> matrix;
+    matrix["CSE"]["GEN"] = 1;
+    matrix["CSE"]["OBC"] = 1;
+    matrix["CSE"]["SC"] = 1;
+    matrix["CSE"]["ST"] = 1;
+
+    matrix["AI"]["GEN"] = 1;
+    matrix["AI"]["OBC"] = 1;
+    matrix["AI"]["SC"] = 1;
+    matrix["AI"]["ST"] = 1;
+
+    matrix["EE"]["GEN"] = 1;
+    matrix["EE"]["OBC"] = 1;
+    matrix["EE"]["SC"] = 1;
+    matrix["EE"]["ST"] = 1;
+
+    matrix["MnC"]["GEN"] = 1;
+    matrix["MnC"]["OBC"] = 1;
+    matrix["MnC"]["SC"] = 1;
+    matrix["MnC"]["ST"] = 1;
+
+    matrix["BM"]["GEN"] = 1;
+    matrix["BM"]["OBC"] = 1;
+    matrix["BM"]["SC"] = 1;
+    matrix["BM"]["ST"] = 1;
+
+    matrix["CE"]["GEN"] = 1;
+    matrix["CE"]["OBC"] = 1;
+    matrix["CE"]["SC"] = 1;
+    matrix["CE"]["ST"] = 1;
+
+    matrix["CH"]["GEN"] = 1;
+    matrix["CH"]["OBC"] = 1;
+    matrix["CH"]["SC"] = 1;
+    matrix["CH"]["ST"] = 1;
+
+    
+    // SeatMatrix m(matrix);
+    if(file.good())
+    {
+        // Extract the first line in the file
+        std::getline(file, line);
+        line.pop_back();
+
+        // Create a stringstream from line
+        std::stringstream ss(line);
+
+        // Extract each column name
+        int colId = 0;
+        while(std::getline(ss, colName, ',')){
+            
+            // Initialize and add <colname, int vector> pairs to result
+            data.push_back({colName, std::vector<string> {}});
+            if(visited.find(colName) == visited.end()){
+                colPlace[colName] = colId;
+                visited.insert(colName);
+            }
+            colId++;
+        }
+    }
+    for(auto i=colPlace.begin();i!=colPlace.end();i++){
+        cout<<i->first<<" "<<i->second<<endl;
+    }
+    while(std::getline(file, line))
+    {
+        line.pop_back();
+        string temp = "";
+        int colId = 0;
+        //cout<<line<<endl;
+        for(int i=0;i<line.size();i++){
+            
+            if(line[i] == ','){
+                data.at(colId).second.push_back(temp);
+                //cout<<temp<<endl;
+                temp = "";
+                colId++;
+            }
+            else{
+                temp += line[i];
+            }
+        }
+        data.at(colId).second.push_back(temp);
+        //cout<<temp<<temp.size()<<endl;//"  "<<colId<<endl;//<<data.at(colId).first<<endl;
+
+    }
+    //cout<<data[8].first[-1]<<endl;
+    for(int i=0;i<data.size();i++){
+        cout<<"ColName "<<i<<": "<<data[i].first<<" ";
+        for(int j=0;j<data[i].second.size();j++){
+            cout<<data[i].second[j]<<" ";
+        }
+        cout<<endl;
+        cout.flush();
+    }
+    map<string,vector<string>> studentPriority;
+    
+    // cout<<data.at(colPlace["applicant_id"]).second[0]<<" :"<<data.at(colPlace["specialization_desc_2"]).second[0]<<endl;
+    // for(int i=0;i<data.at(colPlace["applicant_id"]).second.size();i++){
+    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_1"]).second[i]);
+    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_2"]).second[i]);
+    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_3"]).second[i]);
+    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_4"]).second[i]);
+    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_5"]).second[i]);
+    // }
+    // cout<<studentPriority["1"][0]<<endl;
+    // cout<<data.at(colPlace["category"]).second[0]<<endl;
+
+>>>>>>> 6c4d64a7ab5536bdc43b26757dd1c27ad3f84d79
     // Rule::Rule<string>* currRule = new GateScoreRule();
     sort(data.at(colPlace["gate_score"]).second.begin(),data.at(colPlace["gate_score"]).second.end(),Comparator());
     for(int i=0;i<data.size();i++){
@@ -337,4 +456,8 @@ int main(){
         cout.flush();
     }
     return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6c4d64a7ab5536bdc43b26757dd1c27ad3f84d79
