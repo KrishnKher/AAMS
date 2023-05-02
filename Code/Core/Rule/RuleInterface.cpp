@@ -17,7 +17,7 @@ Rule::CompositeRule<T>::fetchRulePriorities(std::vector<shared_ptr<Rule<T>>> req
 
     std::map<shared_ptr<Rule<T>>, uint32_t> resultRulePriorities;
     for(auto& rulePointer: requestedRules) {
-        resultRulelPriorities[rulePointer] = this->resultPriorities[rulePointer];
+        resultRulePriorities[rulePointer] = this->resultPriorities[rulePointer];
     }
 
     return resultRulePriorities;
@@ -80,7 +80,7 @@ Rule::CompositeRule<T>::fetchRuleConjunctions(std::vector<std::pair<shared_ptr<R
   shared_ptr<Rule<T>>>> rulePairs) {
 
 std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
- Rule::ruleMixType> resultRuleConjunctions;
+ ruleMixType> resultRuleConjunctions;
 
     for(auto& rulePair: rulePairs) {
         resultRuleConjunctions[rulePair] = this->ruleConjunctions[rulePair];
@@ -129,7 +129,7 @@ bool Rule::CompositeRule<T>::subtractRuleConjunctions(std::vector<std::pair<shar
  shared_ptr<Rule<T>>>> oldRuleConjunctions) {
 
     for (auto& oldRuleConjunction: oldRuleConjunctions) {
-        this->ruleConjunctions.erase(newRuleConjunction);
+        this->ruleConjunctions.erase(oldRuleConjunction);
     }
     return true;
  }
