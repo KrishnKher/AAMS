@@ -201,10 +201,18 @@
 #include <iostream>
 #include <bits/stdc++.h>
 #include "../SeatMatrix/SeatMatrix.h"
+// #include "../Rule/Rule.h"
 using namespace std;
 
+class Comparator{
+    public:
+        bool operator()(string a,string b){
+            return stoi(a) < stoi(b);
+        }
+};
+
 int main(){
-    ifstream file("/home/sujeeth/project_graph/SWE/modCoap.csv");
+    ifstream file("/home/sujeeth/project_graph/SWE/modCOAP.csv");
     vector<pair<string,vector<string>>> data;
     if(!file.is_open()) throw std::runtime_error("Could not open file");
     string line,colName;
@@ -246,7 +254,9 @@ int main(){
     matrix["CH"]["OBC"] = 1;
     matrix["CH"]["SC"] = 1;
     matrix["CH"]["ST"] = 1;
-    SeatMatrix m(matrix);
+
+    
+    // SeatMatrix m(matrix);
     if(file.good())
     {
         // Extract the first line in the file
@@ -315,5 +325,16 @@ int main(){
     // }
     // cout<<studentPriority["1"][0]<<endl;
     // cout<<data.at(colPlace["category"]).second[0]<<endl;
+
+    // Rule::Rule<string>* currRule = new GateScoreRule();
+    sort(data.at(colPlace["gate_score"]).second.begin(),data.at(colPlace["gate_score"]).second.end(),Comparator());
+    for(int i=0;i<data.size();i++){
+        cout<<"ColName "<<i<<": "<<data[i].first<<" ";
+        for(int j=0;j<data[i].second.size();j++){
+            cout<<data[i].second[j]<<" ";
+        }
+        cout<<endl;
+        cout.flush();
+    }
     return 0;
 }
