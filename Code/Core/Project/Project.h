@@ -1,36 +1,38 @@
 #include <iostream>
 #include <bits/stdc++.h>
-//#include "../Rule/Rule.h"
+#include "../Rule/Rule.h"
 #include "../SeatMatrix/SeatMatrix.h"
 using namespace std;
 
-class Rule{
-    int a;
-};
+// class Rule{
+//     int a;
+// };
 
 class Project {
     private: 
         Rule* currRule;
-        uint currRoundState;
-        vector<uint> totalRounds;
+        uint32_t currRoundState;
+        vector<uint32_t> totalRounds;
         string baseFilePath;
         vector<string> coapResponsePaths;
         vector<pair<string,vector<string>>> data;
-        map<pair<string,string>,vector<string>> studentPriority;
+        map<string,int> colPlace; // tells the colId of the colName
+        set<string> visited;
+        map<string,vector<string>> studentPriority;
         vector<vector<pair<string,vector<string>>>> allRoundData;
         SeatMatrix currSeatMatrix; 
     protected:
     public:
-        Project(string fileName,map<string,map<string,uint>> matrix);
+        Project(string fileName,map<string,map<string,uint32_t>> matrix);
         // make a load file function
         void loadData(string fileName);
-        void loadStudentPriority(string fileName);
-        void deleteRow(uint id);
+        void loadStudentPriority();
+        void deleteRow(uint32_t id);
         void createSeatMatrix(SeatMatrix matrix);
         void updateSeatMatrix();
         void sort();
-        void preProcessData(string coapResponsePath,uint roundNumber);
-        void deleteRound(uint roundNumber);
+        void preProcessData(string coapResponsePath,uint32_t roundNumber);
+        void deleteRound(uint32_t roundNumber);
         void addRound();
-        void switchRound(uint roundNumber);
+        void switchRound(uint32_t roundNumber);
 };
