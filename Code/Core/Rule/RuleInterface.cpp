@@ -15,7 +15,7 @@ template <typename T>
 std::map<shared_ptr<Rule::Rule<T>>, uint32_t>
 Rule::CompositeRule<T>::fetchRulePriorities(std::vector<shared_ptr<Rule<T>>> requestedRules) {
 
-    std::map<shared_ptr<Rule::Rule<T>>, uint32_t> resultRulePriorities;
+    std::map<shared_ptr<Rule<T>>, uint32_t> resultRulePriorities;
     for(auto& rulePointer: requestedRules) {
         resultRulelPriorities[rulePointer] = this->resultPriorities[rulePointer];
     }
@@ -26,7 +26,7 @@ Rule::CompositeRule<T>::fetchRulePriorities(std::vector<shared_ptr<Rule<T>>> req
 /* Accessor functions for handling storage
 of rules and their priorities.*/
 template <typename T>
-std::map<shared_ptr<Rule::Rule<T>>, uint32_t> fetchAllRulePriorities() { 
+std::map<shared_ptr<Rule::Rule<T>>, uint32_t> Rule::CompositeRule<T>::fetchAllRulePriorities() { 
     return this->rulePriorities;
 }
 
@@ -79,7 +79,7 @@ std::map<std::pair<shared_ptr<Rule::Rule<T>>, shared_ptr<Rule::Rule<T>>>, Rule::
 Rule::CompositeRule<T>::fetchRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<T>>,
   shared_ptr<Rule<T>>>> rulePairs) {
 
-std::map<std::pair<shared_ptr<Rule::Rule<T>>, shared_ptr<Rule::Rule<T>>>,
+std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
  Rule::ruleMixType> resultRuleConjunctions;
 
     for(auto& rulePair: rulePairs) {
@@ -101,7 +101,7 @@ bool Rule::CompositeRule<T>::updateRulePair(std::vector<std::pair<std::pair<shar
 
     for(auto& ruleQuadruple: rulePairsExchangeMap) {
         this->ruleConjunctions[ruleQuadruple.first] = this->ruleConjunctions[ruleQuadruple.second];
-        this->ruleConjunctions.erase(ruleQuadruple.second).
+        this->ruleConjunctions.erase(ruleQuadruple.second);
     }
     return true;
   }
@@ -109,7 +109,7 @@ bool Rule::CompositeRule<T>::updateRulePair(std::vector<std::pair<std::pair<shar
 bool Rule::CompositeRule<T>::updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule<T>>,
  shared_ptr<Rule<T>>>, ruleMixType>> updatedRuleConjunctions) {
 
-    for(auto& updatedRuleConjunction: updateRuleConjunctions) {
+    for(auto& updatedRuleConjunction: updatedRuleConjunctions) {
         this->ruleConjunctions[updatedRuleConjunction.first] = updatedRuleConjunction.second;
     }
     return true;
@@ -128,12 +128,8 @@ bool Rule::CompositeRule<T>::addRuleConjunctions(
 bool Rule::CompositeRule<T>::subtractRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<T>>,
  shared_ptr<Rule<T>>>> oldRuleConjunctions) {
 
-    for (auto& newRuleConjunction: newRuleConjunctions) {
+    for (auto& oldRuleConjunction: oldRuleConjunctions) {
         this->ruleConjunctions.erase(newRuleConjunction);
     }
     return true;
  }
-
-int main() {
-    cout << "Hello." << endl;
-}
