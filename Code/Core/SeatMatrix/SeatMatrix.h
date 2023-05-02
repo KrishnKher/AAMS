@@ -4,11 +4,15 @@ using namespace std;
 
 class SeatMatrix {
     private: 
-        map<string, map<string,uint> > matrix;
+        map<string, map<string,uint32_t> > matrix;
     protected:
     public:
-        SeatMatrix(map<string,map<string,uint>> matrix);
-        void addSeats(string dep,string category,unit seats);
-        void deleteSeats(string dep,string category,unit seats);
+        SeatMatrix(){};
+        SeatMatrix(const SeatMatrix& a);
+        SeatMatrix(map<string,map<string,uint32_t>> m);
+        void addSeats(string dep,string category,uint32_t seats);
+        void deleteSeats(string dep,string category,uint32_t seats);
+        void printSeats();
+        map<string,map<string,uint32_t>> getMatrix();
         //void checkSystemHealth(shared_ptr<MetaSystemHandler>);
 };
