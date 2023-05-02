@@ -7,8 +7,11 @@ class SeatMatrix {
         map<string, map<string,uint> > matrix;
     protected:
     public:
-        SeatMatrix(map<string,map<string,uint>> matrix);
-        void addSeats(string dep,string category,unit seats);
-        void deleteSeats(string dep,string category,unit seats);
+        SeatMatrix(){};
+        SeatMatrix(SeatMatrix& a);
+        SeatMatrix(map<string,map<string,uint>> m);
+        void addSeats(string dep,string category,uint seats);
+        void deleteSeats(string dep,string category,uint seats);
+        void printSeats();
         //void checkSystemHealth(shared_ptr<MetaSystemHandler>);
 };

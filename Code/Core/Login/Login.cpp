@@ -20,6 +20,7 @@ bool Login::checkCredentials(string userName, string password) {
     if (entry.MemberBegin()->name.GetString() == userName) {
       if (entry.MemberBegin()->value.GetString() == password) {
         auth = true;
+        createUser(userName);
       }
       break;
     }
@@ -27,14 +28,14 @@ bool Login::checkCredentials(string userName, string password) {
   return auth;
 }
 
-void Login::setValues(string uname,string pwd,User& currUser){
+void Login::setValues(string uname,string pwd,User currUser){
     userName = uname;
     hashedPassword = pwd;
     this->currUser = &currUser; 
 }
 
 // TO BE DONE
-User& Login::registerUser(string uname,string pwd){
+void Login::registerUser(string uname,string pwd){
     fstream logFile("log.json",ios::in | ios::out);
     string json((istreambuf_iterator<char>(logFile)),istreambuf_iterator<char>());
     rapidjson::Document doc;
@@ -47,12 +48,14 @@ User& Login::registerUser(string uname,string pwd){
     
 }
 
-User& Login::createUser(string uname){
-  
+void Login::createUser(string uname){
+  // create user
+  User::User user;
+  this->currUser = user;
 }
 
 void Login::logout(){
-    //delete currUser; //delete the curr user
+    delete currUser; //delete the curr user
     userName = "";
     hashedPassword = "";
 }
