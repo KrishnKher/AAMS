@@ -15,7 +15,7 @@ class Project {
         vector<uint32_t> totalRounds;
         string baseFilePath;
         vector<string> coapResponsePaths;
-        vector<pair<string,vector<string>>> data;
+        vector<pair<string,vector<string>>> studentData;
         map<string,int> colPlace; // tells the colId of the colName
         set<string> visited;
         map<string,vector<string>> studentPriority;
