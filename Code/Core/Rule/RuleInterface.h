@@ -8,6 +8,7 @@ using namespace std;
 namespace Rule {
 
 enum class dataType { numeric, text, other };
+enum class relationType { lesser, greater, equal };
 enum class ruleMixType { AND, NOT, OR };
 enum class sortOrder { ascending, descending, none };
 
@@ -26,7 +27,7 @@ public:
 //   bool loadRule(std::map<ruleElement> referenceRuleComposition);
 //   std::map<ruleElement> fetchRule();
 
-  virtual bool comparator(T operand1, T operand2) = 0; //requires variadic, pack, fold expression
+  virtual relationType comparator(T operand1, T operand2) = 0; //requires variadic, pack, fold expression
 
   virtual bool condition() = 0;
 
@@ -136,7 +137,7 @@ class CompositeRule : public Rule <T> {
 
     // bool condition() override; // WHAT ABOUT pure virtial?
 
-    // bool comparator() override;
+    relationType comparator(T operand1, T operand2) override;
 
     // bool operator and (Rule &complementaryRule) override;
     // bool operator or (Rule &complementaryRule) override;
