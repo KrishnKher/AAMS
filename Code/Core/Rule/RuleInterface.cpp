@@ -133,3 +133,13 @@ bool Rule::CompositeRule<T>::subtractRuleConjunctions(std::vector<std::pair<shar
     }
     return true;
  }
+
+ template <typename T>
+Rule::relationType Rule::CompositeRule<T>::comparator(T operand1, T operand2) {
+    
+    for(auto& rulePriority: this->rulePriorities) {
+        if(rulePriority.first->comparator(operand1, operand2) != relationType::equal)
+            return rulePriority.first->comparator(operand1, operand2);
+    }
+    return relationType::equal;
+ }
