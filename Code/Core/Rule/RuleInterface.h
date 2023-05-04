@@ -8,7 +8,7 @@ using namespace std;
 namespace Rule {
 
 enum class dataType { numeric, text, other };
-enum class relationType { lesser, greater, equal };
+enum relationType { lesser, greater, equal };
 enum class ruleMixType { AND, NOT, OR };
 enum class sortOrder { ascending, descending, none };
 
@@ -79,17 +79,17 @@ public:
   // ~BaseRule() override; //DESTRUCTO!
 };
 
-template <typename T>
+template <typename T, typename... ruleType>
 class CompositeRule : public Rule <T> {
   private:
   protected:
-    std::map<shared_ptr<Rule<T>>, uint32_t> rulePriorities;
-    std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>, ruleMixType> ruleConjunctions;
+    std::map<shared_ptr<Rule<ruleType>>, uint32_t> rulePriorities;
+    std::map<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>, ruleMixType> ruleConjunctions;
 
   public:
     /* Initialization based constructor.*/
-    CompositeRule(std::map<shared_ptr<Rule<T>>, uint32_t> rulePriorities = {},
-    std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>, ruleMixType> ruleConjunctions = {})
+    CompositeRule(std::map<shared_ptr<Rule<ruleType>>, uint32_t> rulePriorities = {},
+    std::map<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>, ruleMixType> ruleConjunctions = {})
     : rulePriorities(rulePriorities), ruleConjunctions(ruleConjunctions) {}; // initializer_list based!!!
     /* Deep copy constructor.*/
     CompositeRule(const CompositeRule &compositeRule) {};
@@ -98,42 +98,42 @@ class CompositeRule : public Rule <T> {
 
     /* Accessor-mutator function pair for handling storage
      of rules and their priorities.*/
-    bool configureRulePriorities(std::map<shared_ptr<Rule<T>>, uint32_t> referenceRulePriorities);
+    bool configureRulePriorities(std::map<shared_ptr<Rule<ruleType>>, uint32_t> referenceRulePriorities);
     // bool configureRulePriorities(std::vector<std::pair<shared_ptr<Rule>, uint32_t>> referenceRulePriorities);
-    // std::vector<std::pair<shared_ptr<Rule<T>>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule<T>>> requestedRules);
-    std::map<shared_ptr<Rule<T>>, uint32_t> fetchRulePriorities(std::vector<shared_ptr<Rule<T>>> requestedRules);
+    // std::vector<std::pair<shared_ptr<Rule<ruleType>>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule<ruleType>>> requestedRules);
+    std::map<shared_ptr<Rule<ruleType>>, uint32_t> fetchRulePriorities(std::vector<shared_ptr<Rule<ruleType>>> requestedRules);
 
     /* Accessor functions for handling storage
     of rules and their priorities.*/
-    std::map<shared_ptr<Rule<T>>, uint32_t> fetchAllRulePriorities();
+    std::map<shared_ptr<Rule<ruleType>>, uint32_t> fetchAllRulePriorities();
 
     /* Mutator functions for handling storage
     of rules and their priorities.*/
-    bool updateRules(std::vector<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>> rulesExchangeMap);
-    bool updateRulePriorities(std::vector<std::pair<shared_ptr<Rule<T>>, uint32_t>> updatedPrioritizedRules);
-    bool addRules(std::vector<std::pair<shared_ptr<Rule<T>>, uint32_t>> newRules);
-    bool subtractRules(std::vector<shared_ptr<Rule<T>>> oldRules);
+    bool updateRules(std::vector<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>> rulesExchangeMap);
+    bool updateRulePriorities(std::vector<std::pair<shared_ptr<Rule<ruleType>>, uint32_t>> updatedPrioritizedRules);
+    bool addRules(std::vector<std::pair<shared_ptr<Rule<ruleType>>, uint32_t>> newRules);
+    bool subtractRules(std::vector<shared_ptr<Rule<ruleType>>> oldRules);
 
     /* Accessor-mutator pair for handling storage of various rule conjunctions.*/
-    bool configureRuleConjunctions(std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
+    bool configureRuleConjunctions(std::map<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
      ruleMixType> ruleConjunctions);
-    std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
-     ruleMixType> fetchRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<T>>,
-      shared_ptr<Rule<T>>>> rulePairs);
+    std::map<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
+     ruleMixType> fetchRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<ruleType>>,
+      shared_ptr<Rule<ruleType>>>> rulePairs);
 
     /* Accessor function for handling storage of various rule conjunctions.*/
-    std::map<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
+    std::map<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
      ruleMixType> fetchAllRuleConjunctions();
 
     /* Mutator functions for handling storage
     of various rule conjunctions.*/
-    bool updateRulePair(std::vector<std::pair<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
-     std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>>> rulePairsExchangeMap);
-    bool updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
+    bool updateRulePair(std::vector<std::pair<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
+     std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>>> rulePairsExchangeMap);
+    bool updateRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
      ruleMixType>> updatedRuleConjunctions);
-    bool addRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>,
+    bool addRuleConjunctions(std::vector<std::pair<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>,
      ruleMixType>> newRuleConjunctions);
-    bool subtractRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<T>>, shared_ptr<Rule<T>>>> oldRuleConjunctions);
+    bool subtractRuleConjunctions(std::vector<std::pair<shared_ptr<Rule<ruleType>>, shared_ptr<Rule<ruleType>>>> oldRuleConjunctions);
 
     // bool condition() override; // WHAT ABOUT pure virtial?
 

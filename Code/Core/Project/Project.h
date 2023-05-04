@@ -4,10 +4,7 @@
 #include "../SeatMatrix/SeatMatrix.h"
 using namespace std;
 
-// class Rule{
-//     int a;
-// };
-
+namespace Project {
 class Project {
     private: 
         Rule::Rule<string>* currRule;
@@ -36,3 +33,5 @@ class Project {
         void addRound();
         void switchRound(uint32_t roundNumber);
 };
+
+}

@@ -58,32 +58,34 @@ class User {
 class ProjectWrapper {
  private:
   std::map <Project::Project, accessDegree> associatedProjects;
-  std::set <unique_ptr<Project::Project>> activeProjects;
+  std::set <shared_ptr<Project::Project>> activeProjects;
 
  protected:
  public:
   ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
-                  std::set <unique_ptr<Project::Project>> activeProjects = {})
+                  std::set <shared_ptr<Project::Project>> activeProjects = {})
   : associatedProjects(associatedProjects), activeProjects(activeProjects) {};
   // ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
-  //                 std::vector <unique_ptr<Project::Project>> openProjects = {})
+  //                 std::vector <shared_ptr<Project::Project>> openProjects = {})
   // : associatedProjects(associatedProjects) { // do something about open projects
   // };
   /* ProjectWrapper(const ProjectWrapper& referenceProject);*/
   /* ProjectWrapper(ProjectWrapper&& project);*/
+
+  shared_ptr<Project::Project> createProject();
 
   bool registerProjects(std::vector <std::pair<Project::Project, accessDegree>> unclaimedProjects);
   bool registerProjects(std::map <Project::Project, accessDegree> unclaimedProjects);
   bool deregisterProjects(std::vector <Project::Project> claimedProjects);
 
   std::map <Project::Project, accessDegree> fetchRegisteredProjects(
-                std::vector <unique_ptr<Project::Project>> registeredProjects);
+                std::vector <shared_ptr<Project::Project>> registeredProjects);
   std::map <Project::Project, accessDegree> fetchRegisteredProjects(
                 std::vector <Project::Project> registeredProjects);
   std::map <Project::Project, accessDegree> fetchAllRegisteredProjects();       
 
-  bool openProjects(std::vector<unique_ptr<Project::Project>> requestedProjects);
-  bool closeProjects(std::vector<unique_ptr<Project::Project>> requestedProjects);
+  bool openProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
+  bool closeProjects(std::vector<shared_ptr<Project::Project>> requestedProjects);
 
   bool openAllProjects();
   bool closeAllProjects();
@@ -93,11 +95,16 @@ class ProjectWrapper {
 
   bool configureAccess(std::vector <Project::Project> legacyProjects);
 
+  bool deleteProject(Project::Project oldProject);
+
+  bool deleteProject(shared_ptr <Project::Project> oldProject);
+
   bool deleteProjects(std::vector <shared_ptr <Project::Project>> requestedProjects);
 
   ~ProjectWrapper();
 };
 
+// Taruvata.
 class ThemeWrapper {
  private:
   std::vector<int> preferredThemes;  // not actually an int!!

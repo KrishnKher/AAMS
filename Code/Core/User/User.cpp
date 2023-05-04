@@ -70,39 +70,67 @@ using namespace std;
     return this->associatedProjects;
   }     
 
-  bool User::ProjectWrapper::openProjects(std::vector<unique_ptr<Project::Project>> requestedProjects) {
+  bool User::ProjectWrapper::openProjects(std::vector<shared_ptr<Project::Project>> requestedProjects) {
     for (auto& projectPointer : requestedProjects) {
       this->activeProjects.insert(projectPointer); // assert?
     }
   }
-  bool User::ProjectWrapper::closeProjects(std::vector<unique_ptr<Project::Project>> requestedProjects) {
+  bool User::ProjectWrapper::closeProjects(std::vector<shared_ptr<Project::Project>> requestedProjects) {
     for (auto& projectPointer : requestedProjects) {
       this->activeProjects.erase(projectPointer); // assert?
     }
   }
 
   bool User::ProjectWrapper::openAllProjects() {
-    for(auto& project: this->associatedProjects) {
-      // std::unique_ptr = make_unique <project.first> 
+    for (auto& projectPointer : this->associatedProjects) {
+      std::shared_ptr <Project::Project> activePointer = std::make_shared <Project::Project> (projectPointer.first);
+      this->activeProjects.insert(activePointer); // assert?
     }
+    return true;
   }
+
   bool User::ProjectWrapper::closeAllProjects() {
-
+    this->activeProjects.clear();
+    return true;
   }
 
-  std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllOpenProjects() {
+  // std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllOpenProjects() {
+  //   std::vector<Project::Project, accessDegree> resultProjects;
 
+  //   for(auto setIterator = this->activeProjects.begin(); 
+  //           setIterator != this->activeProjects.end(); setIterator++) {
+  //           resultProjects.push_back({**setIterator, this->associatedProjects[**setIterator]});
+  //         }
+  // }
+
+  // std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllClosedProjects() {
+
+  // }
+
+  // bool User::ProjectWrapper::configureAccess(std::vector <Project::Project> legacyProjects) {
+
+  // }
+
+  bool User::ProjectWrapper::deleteProject(Project::Project oldProject) {
+    this->associatedProjects.erase(oldProject);
+    std::shared_ptr oldProjectProxy = make_shared <Project::Project> (oldProject);
+    this->activeProjects.erase(oldProjectProxy);
+    return true;
   }
-  std::vector<Project::Project, User::accessDegree> User::ProjectWrapper::fetchAllClosedProjects() {
 
-  }
-
-  bool User::ProjectWrapper::configureAccess(std::vector <Project::Project> legacyProjects) {
-
+  bool User::ProjectWrapper::deleteProject(shared_ptr<Project::Project> oldProject) {
+    this->associatedProjects.erase(*oldProject);
+    this->activeProjects.erase(oldProject);
+    return true;
   }
 
   bool User::ProjectWrapper::deleteProjects(std::vector <shared_ptr<Project::Project>> requestedProjects) {
 
+    for(auto& oldProject: requestedProjects) {
+    this->associatedProjects.erase(*oldProject);
+    this->activeProjects.erase(oldProject);
+    }
+    return true;
   }
 
   /* ~User::ProjectWrapper::ProjectWrapper() {};*/
