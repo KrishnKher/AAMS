@@ -47,7 +47,7 @@ using namespace std;
   }
 
   std::map <Project::Project, User::accessDegree> User::ProjectWrapper::fetchRegisteredProjects(
-                std::vector <unique_ptr<Project::Project>> registeredProjects) {
+                std::vector <shared_ptr<Project::Project>> registeredProjects) {
     std::map <Project::Project, accessDegree> resultProjects;
 
     for(auto& userProjectPointer: registeredProjects) {
