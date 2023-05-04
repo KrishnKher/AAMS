@@ -207,7 +207,7 @@ using namespace std;
 class Comparator{
     public:
         bool operator()(vector<string> a,vector<string> b){
-            return stoi(a[3]) < stoi(b[3]);
+            return stoi(a[3]) > stoi(b[3]);
         }
 };
 
@@ -310,34 +310,141 @@ int main(){
     matrix["CH"]["OBC"] = 1;
     matrix["CH"]["SC"] = 1;
     matrix["CH"]["ST"] = 1;
+    
+    matrix["MSME"]["GEN"] = 1;
+    matrix["MSME"]["OBC"] = 1;
+    matrix["MSME"]["SC"] = 1;
+    matrix["MSME"]["ST"] = 1;
 
     pair<map<string,int>,vector<vector<string>>> s = loadStudent("/home/sujeeth/project_graph/SWE/modCOAP.csv");
-    pair<map<string,int>,vector<vector<string>>> c = loadStudent("/home/sujeeth/project_graph/SWE/coapResponse.csv");
     
+    int tolCols = s.first.size();
+    s.first["offer"] = tolCols;
+    s.first["priority"] = tolCols+1;
+
     map<string,int> studentColPlace = s.first;
     vector<vector<string>> studentData = s.second;
-
-    map<string,int> coapColPLace = c.first; 
-    vector<vector<string>> coapData = c.second;
+    for(int i=0;i<studentData.size();i++){
+        studentData[i].push_back("No Offer");
+        studentData[i].push_back("0");
+    }
 
     printData(studentData);
-    cout<<endl<<endl;
-    printData(coapData);
+    cout<<endl;
+    for(auto it=studentColPlace.begin();it!=studentColPlace.end();it++){
+        cout<<it->first<<": "<<it->second<<endl;
+    }
 
-    // SeatMatrix m(matrix);
+    SeatMatrix m(matrix);
     map<string,vector<string>> studentPriority;
-    
-    // cout<<data.at(colPlace["applicant_id"]).second[0]<<" :"<<data.at(colPlace["specialization_desc_2"]).second[0]<<endl;
-    // for(int i=0;i<data.at(colPlace["applicant_id"]).second.size();i++){
-    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_1"]).second[i]);
-    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_2"]).second[i]);
-    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_3"]).second[i]);
-    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_4"]).second[i]);
-    //     studentPriority[data.at(colPlace["applicant_id"]).second[i]].push_back(data.at(colPlace["specialization_desc_5"]).second[i]);
-    // }
-    // cout<<studentPriority["1"][0]<<endl;
-    // cout<<data.at(colPlace["category"]).second[0]<<endl;
+    // hard coded for now!!!! how to not is still a doubt??
+    for(auto stud : studentData){
+        if(stud.at(studentColPlace["specialization_desc_1"]).size() > 0)
+        studentPriority[stud.at(studentColPlace["applicant_id"])].push_back(stud.at(studentColPlace["specialization_desc_1"]));
+        if(stud.at(studentColPlace["specialization_desc_2"]).size() > 0)
+        studentPriority[stud.at(studentColPlace["applicant_id"])].push_back(stud.at(studentColPlace["specialization_desc_2"]));
+        if(stud.at(studentColPlace["specialization_desc_3"]).size() > 0)
+        studentPriority[stud.at(studentColPlace["applicant_id"])].push_back(stud.at(studentColPlace["specialization_desc_3"]));
+        if(stud.at(studentColPlace["specialization_desc_4"]).size() > 0)
+        studentPriority[stud.at(studentColPlace["applicant_id"])].push_back(stud.at(studentColPlace["specialization_desc_4"]));
+        if(stud.at(studentColPlace["specialization_desc_5"]).size() > 0)
+        studentPriority[stud.at(studentColPlace["applicant_id"])].push_back(stud.at(studentColPlace["specialization_desc_5"]));
+    }
+    for(auto it = studentPriority.begin();it!=studentPriority.end();it++){
+        cout<<it->first<<": ";
+        for(int i = 0;i<it->second.size();i++){
+            cout<<it->second[i]<<" ";
+        }
+        cout<<endl;
+    }
 
     // Rule::Rule<string>* currRule = new GateScoreRule();
+
+    sort(studentData.begin(),studentData.end(),Comparator());
+    //add cols to student data
+
+
+    vector<vector<string>> results;
+    for(auto row : studentData){
+        string id = row[studentColPlace["applicant_id"]];
+        string name = row[studentColPlace["full_name"]];
+        string stud_cat = row[studentColPlace["category"]];
+        vector<string> specs = studentPriority[row[studentColPlace["applicant_id"]]];
+        for(auto spec : specs){
+            if(m.getSeats(spec,"GEN") != 0){
+                m.deleteSeats(spec,"GEN",1);
+                results.push_back(vector<string>{id,name,spec,"GEN"});
+                break;
+            }
+            else if(m.getSeats(spec,stud_cat) != 0){
+                m.deleteSeats(spec,stud_cat,1);
+                results.push_back(vector<string>{id,name,spec,stud_cat});
+                break;
+            }
+        }
+    }
+
+    printData(studentData); 
+    cout<<endl;   
+
+    for(auto res : results){
+        for(auto col : res){
+            cout<<col<<"\t";
+        }
+        cout<<endl;
+    }
+
+    pair<map<string,int>,vector<vector<string>>> c = loadStudent("/home/sujeeth/project_graph/SWE/COAP_resp.csv");
+    
+    map<string,int> coapColPlace = c.first; 
+    vector<vector<string>> coapData = c.second;
+
+    for(auto it=coapColPlace.begin();it!=coapColPlace.end();it++){
+        cout<<it->first<<": "<<it->second<<endl;
+    }
+    cout<<endl;
+    printData(coapData);
+    cout<<endl;
+    
+    vector<vector<string>> offeredStudents;
+    for(auto row : coapData){
+        string id = row[coapColPlace["MTech Application No"]];
+        string name = row[coapColPlace["Applicant Name"]];
+        string category = row[coapColPlace["Offered Category"]];
+        string spec = row[coapColPlace["Program Offered"]];
+        string decision = row[coapColPlace["Applicant Decision"]];
+        if(decision == "Accept and Freeze"){
+            for(int i=0;i<studentData.size();i++){
+                if(studentData[i][studentColPlace["applicant_id"]] == id){
+                    offeredStudents.push_back(vector<string>{id,name,spec,category});
+                    studentData.erase(studentData.begin()+i);
+                    break;
+                }
+            }
+        }
+        else if(decision == "Retain and Wait"){
+
+        }
+        else if(decision == "Reject and Wait"){
+            for(int i=0;i<studentData.size();i++){
+                if(studentData[i][studentColPlace["applicant_id"]] == id){
+                    studentData[i][studentColPlace["offer"]] = "No Offer";
+                    m.addSeats(spec,category,1);
+                    for(int i=0;i<studentPriority[id].size();i++){
+                        if(studentPriority[id][i] == spec){
+                            studentPriority[id].erase(studentPriority[id].begin()+i,studentPriority[id].end());
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        else{
+            // generate an error
+        }
+    }
+
+
     return 0;
 }
