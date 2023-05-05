@@ -55,14 +55,20 @@ class User {
   /* ~User();*/
 };
 
+struct projectComparator {
+  bool operator () (const Project::Project project1, Project::Project project2) const {
+    return true;
+  }
+};
+
 class ProjectWrapper {
  private:
-  std::map <Project::Project, accessDegree> associatedProjects;
+  std::map <Project::Project, accessDegree, projectComparator> associatedProjects;
   std::set <shared_ptr<Project::Project>> activeProjects;
 
  protected:
  public:
-  ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
+  ProjectWrapper(std::map <Project::Project, accessDegree, projectComparator> associatedProjects = {}, 
                   std::set <shared_ptr<Project::Project>> activeProjects = {})
   : associatedProjects(associatedProjects), activeProjects(activeProjects) {};
   // ProjectWrapper(std::map <Project::Project, accessDegree> associatedProjects = {}, 
