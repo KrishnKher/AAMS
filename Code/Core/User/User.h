@@ -56,7 +56,7 @@ class User {
 };
 
 struct projectComparator {
-  bool operator () (const Project::Project project1, Project::Project project2) const {
+  bool operator () (const Project::Project project1, const Project::Project project2) const {
     return true;
   }
 };
