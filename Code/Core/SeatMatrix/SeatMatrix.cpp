@@ -30,7 +30,7 @@ uint32_t SeatMatrix::getSeats(string dep,string category){
     return matrix[dep][category];
 }
 
-map<string,map<string,uint>> SeatMatrix::getMatrix(){
+map<string,map<string,uint32_t>> SeatMatrix::getMatrix(){
     return matrix;
 }
 
