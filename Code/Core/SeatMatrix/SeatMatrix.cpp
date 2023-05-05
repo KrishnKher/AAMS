@@ -1,6 +1,7 @@
 #include "SeatMatrix.h"
 using namespace std;
 
+namespace SeatMatrix{
 void SeatMatrix::addSeats(string dep,string category,uint32_t seats){
     if(matrix.find(dep) != matrix.end() && matrix[dep].find(category) != matrix[dep].end()){
         matrix[dep][category] += seats;
@@ -48,7 +49,7 @@ void SeatMatrix::printSeats(){
         }
     }
 }
-
+}
 // int main(){
 //     map<string,map<string,uint>> matrix;
 //     matrix["hello"]["student"] = 1;
