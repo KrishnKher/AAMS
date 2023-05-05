@@ -38,14 +38,16 @@ class Project {
         SeatMatrix currSeatMatrix; 
     protected:
     public:
-        Project(string fileName,map<string,map<string,uint32_t>> matrix);
+        Project();
+        void setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix);
         // make a load file function
         pair<map<string,int>,vector<vector<string>>> loadData(string fileName);
         void loadStudentPriority();
+        void setPriority(map<string,string> priority);
         void deleteRow(uint32_t id);
         void createSeatMatrix(SeatMatrix matrix);
         vector<vector<string>> getOffers();
-        void sortData(string coapResponsePath);
+        vector<map<string,string>> sortData(string coapResponsePath,string directory);
         vector<vector<string>> getOffers(uint32_t roundNumber);
         void updateBasedOnCoapData(string coapResponsePath,uint32_t roundNumber);
         void deleteRound(uint32_t roundNumber);

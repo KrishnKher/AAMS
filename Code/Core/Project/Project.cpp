@@ -1,11 +1,14 @@
 #include "Project.h"
 using namespace std;
 
-Project::Project(string fileName,map<string,map<string,uint32_t>> matrix){
+Project::Project(){
     currRoundState = 1;
-    baseFilePath = fileName;
     totalRounds.push_back(currRoundState);
     offerResponsePaths.push_back("coap_response_"+to_string(currRoundState));
+}
+
+void Project::setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix){
+    baseFilePath = fileName;
     SeatMatrix temp(matrix);
     currSeatMatrix = temp;
 }
@@ -88,24 +91,6 @@ pair<map<string,int>,vector<vector<string>>> Project::loadData(string fileName){
     }
     return make_pair(colPlace,studData);
 }
-
-// void Project::deleteRow(uint32_t id){
-//     int i,j;
-//     for(i=0;i<data.size();i++){
-//         if(data[i].first == "applicant_id"){
-//             for(j=0;j<data[i].second.size();j++){
-//                 if(data[i].second[j] == to_string(id)){
-//                     break;
-//                 }
-//             }
-//         }
-//     }
-//     if(j != data[i].second.size()){
-//         for(i=0;i<data.size();i++){
-//             data[i].second.erase(data[i].second.begin()+j);
-//         }
-//     }
-// }
 
 void Project::loadStudentPriority(){
         for(auto stud : studentData){
@@ -212,7 +197,19 @@ vector<vector<string>> Project::getOffers(uint32_t roundNumber){
     return results;
 }
 
-void Project::sortData(string coapResponsePath){
+void Project::setPriority(map<string,string> priority){
+    for(auto it=priority.begin();it!=priority.end();it++){
+        string id = it->first;
+        string prio = it->second;
+        for(auto& row:studentData){
+            if(row[studentColPlace["applicant_id"]] == id){
+                row[studentColPlace["priority"]] = prio;
+            }
+        }
+    }
+}
+
+vector<map<string,string>> Project::sortData(string coapResponsePath="",string directory=""){
     if(currRoundState == 1){
         pair<map<string,int>,vector<vector<string>>> s = loadData(baseFilePath);
         int tolCols = s.first.size();
@@ -232,14 +229,34 @@ void Project::sortData(string coapResponsePath){
 
     // Rule::Rule<string>* currRule = new GateScoreRule();
 
-    if(currRoundState == 1)
+    if(currRoundState == 1){
         sort(studentData.begin(),studentData.end(),Comparator());
+        vector<map<string,string>> groups;
+        int g = 0;
+        for(int i=0;i<studentData.size()-1;i++){
+            if(studentData[i][studentColPlace["gate_score"]] == studentData[i+1][studentColPlace["gate_score"]]){
+                if(studentData[i][studentColPlace["date_of_birth"]] == studentData[i+1][studentColPlace["date_of_birth"]]){
+                    if(g==0 || g!=i){
+                        map<string,string> temp;
+                        groups.push_back(temp);
+                    }
+                    groups[groups.size()-1][studentData[i][studentColPlace["applicant_id"]]] = studentData[i][studentColPlace["full_name"]]; 
+                    groups[groups.size()-1][studentData[i+1][studentColPlace["applicant_id"]]] = studentData[i+1][studentColPlace["full_name"]];
+                    g=i+1;
+
+                }
+            }
+        }
+        if(groups.size() != 0)
+            return groups;
+    }
     
     if(currRoundState != 1)
         updateBasedOnCoapData(coapResponsePath,currRoundState);
 
     vector<vector<string>> results = getOffers(currRoundState);
-    ofstream writer("offers_"+to_string(currRoundState)+".csv");
+    ofstream writer(directory+"offers_"+to_string(currRoundState)+".csv");
+    writer<<"applicant_id,full_name,Program Offered,Offered Category"<<endl;
     for(auto res:results){
         for(int i=0;i<res.size();i++){
             if(i != res.size()-1)
@@ -249,6 +266,7 @@ void Project::sortData(string coapResponsePath){
         }
     }
     writer.close();
+    return vector<map<string,string>>{};
 }
 
 void Project::printCurrState(){
@@ -377,20 +395,24 @@ int main(){
     matrix["MSME"]["SC"] = 1;
     matrix["MSME"]["ST"] = 1;
 
-    Project p("/home/sujeeth/project_graph/SWE/modCOAP.csv",matrix);
+    Project p;
+    p.setBaseFileSeatMatrix("/home/sujeeth/project_graph/SWE/modCOAP.csv",matrix);
 
-    p.sortData("");
+    // first round
+    p.sortData();
 
     p.printCurrState();
 
     p.addRound();
 
+    // round two
     p.sortData("/home/sujeeth/project_graph/SWE/COAP_resp.csv");
 
     p.printCurrState();
 
     p.addRound();
 
+    // round three
     p.sortData("/home/sujeeth/project_graph/SWE/COAP_resp_2.csv");
 
     p.printCurrState();
