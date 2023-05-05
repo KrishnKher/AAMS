@@ -127,7 +127,7 @@ class Project {
         void createSeatMatrix(SeatMatrix matrix);
         map<string,int> getColData();
         vector<vector<string>> getOffers();
-        vector<map<string,string>> sortData(string coapResponsePath,string directory);
+        vector<map<string,string>> sortData(string coapResponsePath="",string directory="");
         vector<vector<string>> getOffers(uint32_t roundNumber);
         void updateBasedOnCoapData(string coapResponsePath,uint32_t roundNumber);
         void deleteRound(uint32_t roundNumber);
