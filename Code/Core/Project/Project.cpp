@@ -10,7 +10,7 @@ Project::Project(){
 
 void Project::setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix){
     baseFilePath = fileName;
-    SeatMatrix temp(matrix);
+    SeatMatrix::SeatMatrix temp(matrix);
     currSeatMatrix = temp;
 }
 
