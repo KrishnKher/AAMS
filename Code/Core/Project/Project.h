@@ -22,6 +22,7 @@ void printData(vector<vector<string>> data){
     }
 }
 
+namespace Project {
 class Project {
     private: 
         //Rule::Rule<string>* currRule;
@@ -55,3 +56,4 @@ class Project {
         void switchRound(uint32_t roundNumber);
         void printCurrState();
 };
+}

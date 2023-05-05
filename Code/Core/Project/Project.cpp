@@ -1,6 +1,7 @@
 #include "Project.h"
 using namespace std;
 
+namespace Project {
 Project::Project(){
     currRoundState = 1;
     totalRounds.push_back(currRoundState);
@@ -276,6 +277,7 @@ void Project::printCurrState(){
     cout<<"Seat Matrix::::"<<to_string(currRoundState)<<endl;
     currSeatMatrix.printSeats();
 }
+}
 
 // #include <iostream>
 // #include <bits/stdc++.h>
@@ -395,7 +397,7 @@ int main(){
     matrix["MSME"]["SC"] = 1;
     matrix["MSME"]["ST"] = 1;
 
-    Project p;
+    Project::Project p;
     p.setBaseFileSeatMatrix("/home/sujeeth/project_graph/SWE/modCOAP.csv",matrix);
 
     // first round
