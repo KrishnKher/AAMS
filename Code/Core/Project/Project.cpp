@@ -27,7 +27,7 @@ void Project::deleteRound(uint32_t roundNumber){
 
 void Project::addRound(){
     totalRounds.push_back(currRoundState + 1);
-    offerResponsePaths.push_back("coap_response_"+to_string(currRoundState+1));
+    offerResponsePaths.push_back("offers_"+to_string(currRoundState+1)+".csv");
     currRoundState++;
 }
 
