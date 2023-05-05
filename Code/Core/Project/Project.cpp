@@ -5,7 +5,7 @@ namespace Project {
 Project::Project(){
     currRoundState = 1;
     totalRounds.push_back(currRoundState);
-    offerResponsePaths.push_back("coap_response_"+to_string(currRoundState));
+    offerResponsePaths.push_back("offers_"+to_string(currRoundState)+".csv");
 }
 
 void Project::setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix){
