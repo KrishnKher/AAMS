@@ -8,7 +8,7 @@ using namespace std;
 namespace Rule {
 
 enum class dataType { numeric, text, other };
-enum relationType { lesser, greater, equal };
+enum relationType { greater, lesser, equal };
 enum class ruleMixType { AND, NOT, OR };
 enum class sortOrder { ascending, descending, none };
 

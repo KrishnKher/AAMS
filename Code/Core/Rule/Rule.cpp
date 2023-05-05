@@ -35,6 +35,10 @@ bool Rule::DefaultNumericRule::operator () (std::string score1, std::string scor
 
   relationType placeholder = comparator(score1, score2);
 
+  if (placeholder != relationType::greater)
+    result = true;
+
+  return result;
 }
 
 Rule::relationType Rule::DefaultStringRule::comparator(std::string score1, std::string score2) {
@@ -59,6 +63,17 @@ Rule::relationType Rule::DefaultStringRule::comparator(std::string score1, std::
           result = relationType::lesser;
       }
   }
+
+  return result;
+}
+
+bool Rule::DefaultStringRule::operator () (std::string score1, std::string score2) {
+  bool result = false;
+
+  relationType placeholder = comparator(score1, score2);
+
+  if (placeholder != relationType::greater)
+    result = true;
 
   return result;
 }
@@ -138,8 +153,19 @@ Rule::relationType Rule::DoBRule::comparator(std::string dob1, std::string dob2)
   return result;
 }
 
+bool Rule::DoBRule::operator () (std::string score1, std::string score2) {
+  bool result = false;
+
+  relationType placeholder = comparator(score1, score2);
+
+  if (placeholder != relationType::greater)
+    result = true;
+
+  return result;
+}
+
 // small error here. need to fix it
-Rule::relationType Rule::CoAPRule::comparator(std::vector<string> student1, std::vector<string> student2) {
+Rule::relationType Rule::CoAPRule::comparator(std::vector<std::string> student1, std::vector<std::string> student2) {
   auto grandRuleIterator = this->rulePriorities.begin();
 
   while (grandRuleIterator != this->rulePriorities.end()) {
@@ -155,4 +181,15 @@ Rule::relationType Rule::CoAPRule::comparator(std::vector<string> student1, std:
   }
 
   return relationType::equal;
+}
+
+bool Rule::CoAPRule::operator () (std::vector<std::string> score1, std::vector<std::string> score2) {
+  bool result = false;
+
+  relationType placeholder = comparator(score1, score2);
+
+  if (placeholder != relationType::greater)
+    result = true;
+
+  return result;
 }
