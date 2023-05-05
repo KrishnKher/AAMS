@@ -6,12 +6,12 @@ Project::Project(){
     currRoundState = 1;
     totalRounds.push_back(currRoundState);
     offerResponsePaths.push_back("offers_"+to_string(currRoundState)+".csv");
-    currRule = new Rule::CoAPRule();
+    // currRule = new Rule::CoAPRule();
 }
 
 void Project::setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix){
     baseFilePath = fileName;
-    SeatMatrix::SeatMatrix temp(matrix);
+    SeatMatrix temp(matrix);
     currSeatMatrix = temp;
 }
 
