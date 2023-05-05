@@ -10,6 +10,7 @@ class SeatMatrix {
         SeatMatrix(){};
         SeatMatrix(const SeatMatrix& a);
         SeatMatrix(map<string,map<string,uint32_t>> m);
+        uint32_t getSeats(string dep,string category);
         void addSeats(string dep,string category,uint32_t seats);
         void deleteSeats(string dep,string category,uint32_t seats);
         void printSeats();
