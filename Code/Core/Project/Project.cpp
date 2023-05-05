@@ -287,7 +287,12 @@ vector<map<string,string>> Project::sortData(string coapResponsePath="",string d
 
 void Project::printCurrState(){
     cout<<"Student Data:::"<<to_string(currRoundState)<<endl;
-    printData(studentData);
+    for(int i=0;i<studenData.size();i++){
+        for(int j=0;j<studentData[i].size();j++){
+            cout<<studentData[i][j]<<" ";
+        }
+        cout<<endl;
+    }
     cout<<endl<<endl;
     cout<<"Seat Matrix::::"<<to_string(currRoundState)<<endl;
     currSeatMatrix.printSeats();
