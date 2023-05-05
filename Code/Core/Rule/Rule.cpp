@@ -164,7 +164,7 @@ bool Rule::DoBRule::operator () (std::string score1, std::string score2) {
   return result;
 }
 
-// small error here. need to fix it
+// small error here. Need to fix it
 Rule::relationType Rule::CoAPRule::comparator(std::vector<std::string> student1, std::vector<std::string> student2) {
   auto grandRuleIterator = this->rulePriorities.begin();
 
