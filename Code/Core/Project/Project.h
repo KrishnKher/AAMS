@@ -99,15 +99,6 @@ class Comparator{
         }
 };
 
-void printData(vector<vector<string>> data){
-    for(int i=0;i<data.size();i++){
-        for(int j=0;j<data[i].size();j++){
-            cout<<data[i][j]<<" ";
-        }
-        cout<<endl;
-    }
-}
-
 namespace Project {
 class Project {
     private: 
