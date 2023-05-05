@@ -112,13 +112,37 @@ Rule::relationType Rule::DoBRule::comparator(std::string dob1, std::string dob2)
   year[0] = dob1.substr(0, dob1.find(delimiter));
   year[1] = dob2.substr(0, dob2.find(delimiter));
 
-  auto yearComparison = stoi(year[0]) <=> stoi(year[1]);
+  int yearComparison = (stoi(year[0]) == stoi(year[1]));
+
+  if (stoi(year[0]) < stoi(year[1])) {
+    yearComparison = -1;
+  } else if (stoi(year[0]) ==  stoi(year[1])) {
+    yearComparison = 0;
+  } else {
+    yearComparison = 1;
+  }
 
   if (yearComparison == 0) {
-    auto monthComparison = stoi(month[0]) <=> stoi(month[1]);
+    int monthComparison = (stoi(month[0]) == stoi(month[1]));
+
+  if (stoi(month[0]) < stoi(month[1])) {
+    monthComparison = -1;
+  } else if (stoi(month[0]) ==  stoi(month[1])) {
+    monthComparison = 0;
+  } else {
+    monthComparison = 1;
+  }
 
     if (monthComparison == 0) {
-      auto dayComparison = stoi(day[0]) <=> stoi(day[1]);
+      int dayComparison = (stoi(day[0]) == stoi(day[1]));
+
+  if (stoi(day[0]) < stoi(day[1])) {
+    dayComparison = -1;
+  } else if (stoi(day[0]) ==  stoi(day[1])) {
+    dayComparison = 0;
+  } else {
+    dayComparison = 1;
+  }
 
       if (dayComparison == 0) {
         result = relationType::equal;
