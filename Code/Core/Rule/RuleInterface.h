@@ -62,7 +62,7 @@ private:
 protected:
 public:
   BaseRule(std::string columnName = kDefaultColumnName, uint32_t columnIndex = kDefaultColumnIndex,
-    rowIndices = {}, sortOrder sortingOrder = kDefaultSortOrder) : columnName(columnName), 
+    std::vector <uint32_t> rowIndices = {}, sortOrder sortingOrder = kDefaultSortOrder) : columnName(columnName), 
    columnIndex(columnIndex), rowIndices(rowIndices), sortingOrder(sortingOrder) {}; 
   // BaseRule(const BaseRule& referenceBaseRule);
   // BaseRule(BaseRule&& baseRule);
@@ -70,7 +70,7 @@ public:
   inline bool configureColumnName(std::string columnName) { this->columnName = columnName; return true; };
   std::string fetchColumnName() { return this->columnName; }
 
-  inline bool configureColumnIndex(uint32_t columnIndex) { this->columnIndex = columnInidex; return true; }
+  inline bool configureColumnIndex(uint32_t columnIndex) { this->columnIndex = columnIndex; return true; }
   uint32_t fetchColumnIndex() { return this->columnIndex; }
 
   inline bool configureRowIndices(std::vector <uint32_t> rowIndices) 
