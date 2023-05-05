@@ -177,8 +177,18 @@ vector<vector<string>> Project::getOffers(uint32_t roundNumber){
             }
             row_cat = temp;
             if(spec == row_spec){  //if there is an offer from previous round then don't go further in priority
-                results.push_back(vector<string>{id,name,row_spec,row_cat});
-                break;
+                if(row_cat == "GEN"){
+                    results.push_back(vector<string>{id,name,row_spec,row_cat});
+                    break;
+                }
+                else{
+                    if(currSeatMatrix.getSeats(spec,"GEN") != 0){
+                        currSeatMatrix.deleteSeats(spec,"GEN",1);
+                        currSeatMatrix.addSeats(spec,row_cat,1);
+                        results.push_back(vector<string>{id,name,row_spec,"GEN"});
+                        break;
+                    }
+                }
             }
             if(currSeatMatrix.getSeats(spec,"GEN") != 0){
                 currSeatMatrix.deleteSeats(spec,"GEN",1);
