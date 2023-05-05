@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <bits/stdc++.h>
-#include "../Rule/Rule.h"
+// #include "../Rule/Rule.h"
 #include "../SeatMatrix/SeatMatrix.h"
 using namespace std;
 
@@ -84,26 +84,16 @@ class Comparator{
                     } else if (monthComparison < 0) {
                     result = 0;
                     } else {
-                    result = relationType::greater;
+                    result = 1;
                     }
 
                 } else if (yearComparison < 0) {
-                    result = relationType::lesser;
+                    result = 0;
                 } else {
-                    result = relationType::greater;
+                    result = 1;
                 }
 
-                if(fetchSortingOrder() == sortOrder::ascending) {
-                    if (result != relationType::equal)
-                    {
-                        if(result == relationType::lesser)
-                        result = relationType::greater;
-                        else
-                        result = relationType::lesser;
-                    }
-                }
-
-                return result;
+                return 1-result;
             }
             return stoi(a[3]) > stoi(b[3]);
         }
@@ -121,7 +111,7 @@ void printData(vector<vector<string>> data){
 namespace Project {
 class Project {
     private: 
-        Rule::CoAPRule* currRule;
+        // Rule::CoAPRule* currRule;
         uint32_t currRoundState;
         vector<uint32_t> totalRounds;
         string baseFilePath;
@@ -133,7 +123,7 @@ class Project {
         unordered_map<string,string> rules;
         vector<vector<string>> offeredStudents;
         vector<vector<pair<string,vector<string>>>> allRoundData;
-        SeatMatrix::SeatMatrix currSeatMatrix; 
+        SeatMatrix currSeatMatrix; 
     protected:
     public:
         Project();
@@ -143,7 +133,7 @@ class Project {
         void loadStudentPriority();
         void setPriority(map<string,string> priority);
         void deleteRow(uint32_t id);
-        void createSeatMatrix(SeatMatrix::SeatMatrix matrix);
+        void createSeatMatrix(SeatMatrix matrix);
         map<string,int> getColData();
         vector<vector<string>> getOffers();
         vector<map<string,string>> sortData(string coapResponsePath,string directory);
