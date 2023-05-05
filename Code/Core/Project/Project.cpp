@@ -6,6 +6,7 @@ Project::Project(){
     currRoundState = 1;
     totalRounds.push_back(currRoundState);
     offerResponsePaths.push_back("offers_"+to_string(currRoundState)+".csv");
+    currRule = new Rule::CoAPRule();
 }
 
 void Project::setBaseFileSeatMatrix(string fileName,map<string,map<string,uint32_t>> matrix){
@@ -39,6 +40,10 @@ void Project::switchRound(uint32_t roundNumber){
 /*void Project::createSeatMatrix(SeatMatrix matrix){
     this->currSeatMatrix = matrix;
 }*/
+
+map<string,int> Project::getColData(){
+    return studentColPlace;
+}
 
 pair<map<string,int>,vector<vector<string>>> Project::loadData(string fileName){
     ifstream file(fileName);
