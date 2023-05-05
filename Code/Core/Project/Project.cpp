@@ -225,7 +225,7 @@ void Project::setPriority(map<string,string> priority){
     }
 }
 
-vector<map<string,string>> Project::sortData(string coapResponsePath="",string directory=""){
+vector<map<string,string>> Project::sortData(string coapResponsePath,string directory){
     if(currRoundState == 1){
         pair<map<string,int>,vector<vector<string>>> s = loadData(baseFilePath);
         int tolCols = s.first.size();
@@ -287,7 +287,7 @@ vector<map<string,string>> Project::sortData(string coapResponsePath="",string d
 
 void Project::printCurrState(){
     cout<<"Student Data:::"<<to_string(currRoundState)<<endl;
-    for(int i=0;i<studenData.size();i++){
+    for(int i=0;i<studentData.size();i++){
         for(int j=0;j<studentData[i].size();j++){
             cout<<studentData[i][j]<<" ";
         }
