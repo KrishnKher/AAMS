@@ -31,6 +31,8 @@ public:
 //   bool loadRule(std::map<ruleElement> referenceRuleComposition);
 //   std::map<ruleElement> fetchRule();
 
+  uint32_t fetchColumnIndex(); // temporary
+
   virtual relationType comparator(T operand1, T operand2) = 0; //requires variadic, pack, fold expression
 
   virtual bool condition() = 0;
@@ -39,6 +41,8 @@ public:
   virtual bool operator and (Rule &complementaryRule) = 0;
   virtual bool operator or (Rule &complementaryRule) = 0;
   virtual bool operator not () = 0;
+
+  virtual bool operator () (T operand1, T operand2) = 0;
 
   /* Identifies itself as a base rule or a composite rule.*/
   virtual bool isCompositeRule() = 0;
@@ -59,12 +63,15 @@ protected:
 public:
   BaseRule(std::string columnName = kDefaultColumnName, uint32_t columnIndex = kDefaultColumnIndex,
     rowIndices = {}, sortOrder sortingOrder = kDefaultSortOrder) : columnName(columnName), 
-   rowIndices(rowIndices), sortingOrder(sortingOrder) {}; 
+   columnIndex(columnIndex), rowIndices(rowIndices), sortingOrder(sortingOrder) {}; 
   // BaseRule(const BaseRule& referenceBaseRule);
   // BaseRule(BaseRule&& baseRule);
 
   inline bool configureColumnName(std::string columnName) { this->columnName = columnName; return true; };
   std::string fetchColumnName() { return this->columnName; }
+
+  inline bool configureColumnIndex(uint32_t columnIndex) { this->columnIndex = columnInidex; return true; }
+  uint32_t fetchColumnIndex() { return this->columnIndex; }
 
   inline bool configureRowIndices(std::vector <uint32_t> rowIndices) 
   { this->rowIndices = rowIndices; return true; }
@@ -80,6 +87,7 @@ public:
   // bool operator and (Rule &complementaryRule) override {return true; };
   // bool operator or (Rule &complementaryRule) override {return true; };
   // bool operator not () override {return true; };
+  // bool operator () (T operand1, T operand2) override;
 
   inline bool isCompositeRule() final {return false; };
 
@@ -149,6 +157,8 @@ class CompositeRule : public Rule <T> {
     // bool operator and (Rule &complementaryRule) override;
     // bool operator or (Rule &complementaryRule) override;
     // bool operator not () override;
+
+    // bool operator () (T operand1, T operand2) override;
 
     inline bool isCompositeRule() final {return true; };
 
