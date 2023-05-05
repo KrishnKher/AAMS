@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+namespace SeatMatrix{
 class SeatMatrix {
     private: 
         map<string, map<string,uint32_t> > matrix;
@@ -17,3 +18,4 @@ class SeatMatrix {
         map<string,map<string,uint32_t>> getMatrix();
         //void checkSystemHealth(shared_ptr<MetaSystemHandler>);
 };
+}
