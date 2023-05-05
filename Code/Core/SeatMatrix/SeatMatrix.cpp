@@ -25,40 +25,12 @@ void SeatMatrix::deleteSeats(string dep,string category,uint32_t seats){
     }
 }
 
+uint32_t SeatMatrix::getSeats(string dep,string category){
+    return matrix[dep][category];
+}
+
 map<string,map<string,uint>> SeatMatrix::getMatrix(){
     return matrix;
-<<<<<<< HEAD
-}
-
-SeatMatrix::SeatMatrix(map<string,map<string,uint32_t>> m){
-    this->matrix = m;
-}
-
-SeatMatrix::SeatMatrix(const SeatMatrix& a){
-    this->matrix = a.matrix;
-}
-
-void SeatMatrix::printSeats(){
-    for(auto dep=matrix.begin();dep!=matrix.end();dep++){
-        for(auto category=matrix[dep->first].begin();category!=matrix[dep->first].end();category++){
-            cout<<"Department: "<<dep->first<<"\t"<<"Category: "<<category->first<<"\t"<<"Seats: "<<category->second<<endl;
-        }
-    }
-}
-
-int main(){
-    map<string,map<string,uint>> matrix;
-    matrix["hello"]["student"] = 1;
-    SeatMatrix cm(matrix);
-    SeatMatrix c = cm;
-    c.printSeats();
-    cm.printSeats();
-    cm.addSeats("hello","student",2);
-    cm.printSeats();
-    cm.deleteSeats("hello","student",1);
-    cm.printSeats();
-=======
->>>>>>> 6c4d64a7ab5536bdc43b26757dd1c27ad3f84d79
 }
 
 SeatMatrix::SeatMatrix(map<string,map<string,uint32_t>> m){
