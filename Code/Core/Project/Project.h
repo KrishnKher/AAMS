@@ -36,7 +36,7 @@ class Project {
         map<string,vector<string>> studentPriority;
         vector<vector<string>> offeredStudents;
         vector<vector<pair<string,vector<string>>>> allRoundData;
-        SeatMatrix currSeatMatrix; 
+        SeatMatrix::SeatMatrix currSeatMatrix; 
     protected:
     public:
         Project();
@@ -46,7 +46,7 @@ class Project {
         void loadStudentPriority();
         void setPriority(map<string,string> priority);
         void deleteRow(uint32_t id);
-        void createSeatMatrix(SeatMatrix matrix);
+        void createSeatMatrix(SeatMatrix::SeatMatrix matrix);
         vector<vector<string>> getOffers();
         vector<map<string,string>> sortData(string coapResponsePath,string directory);
         vector<vector<string>> getOffers(uint32_t roundNumber);
