@@ -14,11 +14,22 @@ using namespace std;
 
 namespace Rule {
 
-  class GateScoreRule: public BaseRule<std::string> {
+  class DefaultStringRule: public BaseRule <std::string> {
 public:
   bool condition() override { return true; }
 
-  relationType comparator(std::string score1, std::string score2) override;
+  relationType comparator(std::string entry1, std::string entry2) override;
+
+  inline bool operator and (Rule &complementaryRule) override {return true; }
+  inline bool operator or (Rule &complementaryRule) override {return true; }
+  inline bool operator not () override {return true; }
+};
+
+  class DefaultNumericRule: public BaseRule <std::string> {
+public:
+  bool condition() override { return true; }
+
+  relationType comparator(std::string entry1, std::string entry2) override;
 
   inline bool operator and (Rule &complementaryRule) override {return true; }
   inline bool operator or (Rule &complementaryRule) override {return true; }
@@ -37,11 +48,11 @@ public:
   inline bool operator not () override {return true; }
 };
 
-class CoAPRule: public CompositeRule <std::pair<uint32_t, std::string>> {
+class CoAPRule: public CompositeRule <std::vector<std::string>, std::string> {
  public:
   inline bool condition() override { return true; }
 
-  relationType comparator(std::pair<uint32_t, std::string> coapEntry1, std::pair<uint32_t, std::string> coapEntry2) override;
+  relationType comparator(std::vector<std::string> coapEntry1, std::vector<std::string> coapEntry2) override;
 
   inline bool operator and (Rule &complementaryRule) override {return true; }
   inline bool operator or (Rule &complementaryRule) override {return true; }

@@ -1,7 +1,7 @@
 #include "Rule.h"
 using namespace std;
 
-Rule::relationType Rule::GateScoreRule::comparator(std::string score1, std::string score2) {
+Rule::relationType Rule::DefaultNumericRule::comparator(std::string score1, std::string score2) {
   relationType result;
 
   uint32_t _score1 = stoi(score1);
@@ -10,6 +10,19 @@ Rule::relationType Rule::GateScoreRule::comparator(std::string score1, std::stri
   if (_score1 < _score2)
     result = relationType::lesser;
   else if (_score1 == _score2)
+    result = relationType::equal;
+  else
+    result = relationType::greater;
+
+  return result;
+}
+
+Rule::relationType Rule::DefaultStringRule::comparator(std::string score1, std::string score2) {
+  relationType result;
+
+  if (score1 < score2)
+    result = relationType::lesser;
+  else if (score1 == score2)
     result = relationType::equal;
   else
     result = relationType::greater;
@@ -76,8 +89,8 @@ Rule::relationType Rule::DoBRule::comparator(std::string dob1, std::string dob2)
 }
 
 // small error here. need to fix it
-Rule::relationType Rule::CoAPRule::comparator(std::pair<uint32_t, std::string> student1, 
-                                    std::pair<uint32_t, std::string> student2) {
+Rule::relationType Rule::CoAPRule::comparator(std::vector<string> student1, 
+                                    std::vector<string> student2) {
 
     auto grandRuleIterator = this->rulePriorities.begin();
 
