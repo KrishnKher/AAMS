@@ -118,7 +118,7 @@ class CompositeRule : public Rule <T> {
     // std::vector<std::pair<shared_ptr<Rule<Ts>>, uint32_t>> fetchRulePriorities(std::vector<shared_ptr<Rule<Ts>>> requestedRules);
     std::map<shared_ptr<Rule<Ts>>, uint32_t> fetchRulePriorities(std::vector<shared_ptr<Rule<Ts>>> requestedRules);
 
-    /* Accessor functions for handling storage
+    /* Accessor functions for handling storage 
     of rules and their priorities.*/
     std::map<shared_ptr<Rule<Ts>>, uint32_t> fetchAllRulePriorities();
 
