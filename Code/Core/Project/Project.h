@@ -1,37 +1,55 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <bits/stdc++.h>
-#include "../Rule/Rule.h"
+//#include "../Rule/Rule.h"
 #include "../SeatMatrix/SeatMatrix.h"
 using namespace std;
 
-namespace Project {
+class Comparator{
+    public:
+        bool operator()(vector<string> a,vector<string> b){
+            return stoi(a[3]) > stoi(b[3]);
+        }
+};
+
+void printData(vector<vector<string>> data){
+    for(int i=0;i<data.size();i++){
+        for(int j=0;j<data[i].size();j++){
+            cout<<data[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
+
 class Project {
     private: 
-        Rule::Rule<string>* currRule;
+        //Rule::Rule<string>* currRule;
         uint32_t currRoundState;
         vector<uint32_t> totalRounds;
         string baseFilePath;
-        vector<string> coapResponsePaths;
-        vector<pair<string,vector<string>>> studentData;
-        map<string,int> colPlace; // tells the colId of the colName
+        vector<string> offerResponsePaths;
+        vector<vector<string>> studentData;
+        map<string,int> studentColPlace; // tells the colId of the colName
         set<string> visited;
         map<string,vector<string>> studentPriority;
+        vector<vector<string>> offeredStudents;
         vector<vector<pair<string,vector<string>>>> allRoundData;
         SeatMatrix currSeatMatrix; 
     protected:
     public:
         Project(string fileName,map<string,map<string,uint32_t>> matrix);
         // make a load file function
-        void loadData(string fileName);
+        pair<map<string,int>,vector<vector<string>>> loadData(string fileName);
         void loadStudentPriority();
         void deleteRow(uint32_t id);
         void createSeatMatrix(SeatMatrix matrix);
-        void updateSeatMatrix();
-        void sort();
-        void preProcessData(string coapResponsePath,uint32_t roundNumber);
+        vector<vector<string>> getOffers();
+        void sortData(string coapResponsePath);
+        vector<vector<string>> getOffers(uint32_t roundNumber);
+        void updateBasedOnCoapData(string coapResponsePath,uint32_t roundNumber);
         void deleteRound(uint32_t roundNumber);
         void addRound();
         void switchRound(uint32_t roundNumber);
+        void printCurrState();
 };
-
-}
