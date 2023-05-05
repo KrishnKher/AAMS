@@ -14,7 +14,7 @@ using namespace std;
 
 namespace Rule {
 
-  using CsvEntry = std::vector <std::string>;
+  //using CsvEntry = std::vector <std::string>;
 
   class DefaultStringRule: public BaseRule <std::string> {
 public:

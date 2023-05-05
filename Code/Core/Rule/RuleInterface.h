@@ -156,7 +156,7 @@ public:
 
     // bool condition() override; // WHAT ABOUT pure virtial?
 
-    relationType comparator(T operand1, T operand2) override;
+    virtual relationType comparator(T operand1, T operand2) override;
 
     // bool operator and (Rule &complementaryRule) override;
     // bool operator or (Rule &complementaryRule) override;
