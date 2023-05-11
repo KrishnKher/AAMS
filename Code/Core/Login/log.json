@@ -1,9 +1,0 @@
-{
-    "numberOfUsers":2,
-    "validUsers":[
-        {"Sujeeth":"1234"},
-        {"Krishn":"1234"},
-        {"Bharat":"5678"},
-        {"Prathyush":"5678"}
-    ]
-}

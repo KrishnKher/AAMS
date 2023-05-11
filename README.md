@@ -1,2 +1,2 @@
-### AAMS.CoAP: Academic Admissions Management System [CoAP]
+Need to update release info here for various releases here, minimalistically.
 
